@@ -8,6 +8,8 @@ namespace ShaoComputation.Model
 {
     public class LuJing
     {
+        public int start { get; set; }
+        public int end { get; set; }
         /// <summary>
         /// 路径构成
         /// </summary>

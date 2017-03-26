@@ -9,6 +9,8 @@ namespace ShaoComputation.Model
 {
     public class LuDuan
     {
+        public int start { get; set; }
+        public int end { get; set; }
         /// <summary>
         /// 路段车道数
         /// </summary>

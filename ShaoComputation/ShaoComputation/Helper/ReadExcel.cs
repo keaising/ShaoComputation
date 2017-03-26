@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using ShaoComputation.Model;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,30 +15,25 @@ namespace ShaoComputation.Helper
 {
     public class ReadExcel
     {
-        public static List<City> FromExcel(String fullUri)
+        public static List<OD> OD(String fullUri)
         {
-            var cities = new List<City>();
+            var ODs = new List<OD>();
             Excel.Application xlApp = new Excel.Application();
             Excel.Workbook xlWorkbook = xlApp.Workbooks.Open(fullUri);
             Excel._Worksheet xlWorksheet = xlWorkbook.Sheets[1];
             Excel.Range xlRange = xlWorksheet.UsedRange;
             int rowCount = xlRange.Rows.Count;
             int colCount = xlRange.Columns.Count;
-            #region mock
-            //rowCount = 40;
-            //colCount = 40;
-            #endregion
-
 
             Parallel.For(2, rowCount + 1, (i) =>
             {
-                var city = new City();
+                var od = new OD();
                 for (int j = 1; j <= colCount; j++)
                 {
                     if (j == 1)
                     {
-                        city.Name = xlRange.Cells[i, j].Value2.ToString();
-                        city.No = i - 1;
+                        od.start = Convert.ToInt32(xlRange.Cells[i, j].Value2.ToString());
+                        od.end = i - 1;
                     }
                     else
                     {
@@ -45,12 +41,12 @@ namespace ShaoComputation.Helper
                         {
                             var value = xlRange.Cells[i, j].Value2.ToString();
                             var value2 = Convert.ToDouble(value);
-                            city.Distances.Add(j - 1, value2);
+                            od.Q_rs = (double)value2;
                         }
 
                     }
                 }
-                cities.Add(city);
+                ODs.Add(od);
             });
 
             #region release
@@ -63,20 +59,20 @@ namespace ShaoComputation.Helper
             xlApp.Quit();
             Marshal.ReleaseComObject(xlApp);
             #endregion
-            return cities;
+            return ODs;
         }
 
-        public static List<City> FromJson(String fullUri)
+        public static List<OD> FromJson(String fullUri)
         {
-            var cities = new List<City>();
+            var ods = new List<OD>();
             String reader = File.ReadAllText(fullUri);
             var result = JArray.Parse(reader).Children().ToList();
             foreach (var item in result)
             {
-                var city = JsonConvert.DeserializeObject<City>(item.ToString());
-                cities.Add(city);
+                var city = JsonConvert.DeserializeObject<OD>(item.ToString());
+                ods.Add(city);
             }
-            return cities;
+            return ods;
         }
     }
 }

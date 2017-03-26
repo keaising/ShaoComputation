@@ -8,6 +8,8 @@ namespace ShaoComputation.Model
 {
     public class OD
     {
+        public int start { get; set; }
+        public int end { get; set; }
         public double Q_rs { get; set; }
         public double q_rs_c { get; set; }
         public double q_rs_b { get; set; }
