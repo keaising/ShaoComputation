@@ -1,0 +1,85 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using ShaoComputation.Const;
+
+namespace ShaoComputation.Model
+{
+    public class LuDuan
+    {
+        /// <summary>
+        /// 路段车道数
+        /// </summary>
+        public double N { get; set; }
+        /// <summary>
+        /// 单车道通行能力
+        /// </summary>
+        public int C { get; set; }
+        /// <summary>
+        /// 小汽车路阻 值
+        /// </summary>
+        public double tc { get; set; }
+        /// <summary>
+        /// 公交车路阻 值
+        /// </summary>
+        public double tb { get; set; }
+        /// <summary>
+        /// 不同路径叠加在该路段上小汽车的人数
+        /// </summary>
+        public double Fc
+        {
+            get
+            {
+                return At.Sum(l => l.RenShu_c);
+            }
+        }
+        /// <summary>
+        /// 不同路径叠加在该路段上公交车的人数
+        /// </summary>
+        public double Fb
+        {
+            get
+            {
+                return At.Sum(l => l.RenShu_b);
+            }
+        }
+        /// <summary>
+        /// 不同路径叠加在该路段上公交车数量
+        /// </summary>
+        public double Xb
+        {
+            get
+            {
+                return F * Varias.mu;
+            }
+        }
+        /// <summary>
+        /// 不同路径叠加在该路段上小汽车数量
+        /// </summary>
+        public double Xc
+        {
+            get
+            {
+                return Fc / Varias.Bc;
+            }
+        }
+        /// <summary>
+        /// 路段公交车发车频率
+        /// </summary>
+        public int F { get; set; }
+        /// <summary>
+        /// 是否有公交专用道, 0：否，1：是
+        /// </summary>
+        public int Lambda { get; set; }
+        /// <summary>
+        /// 公交专用道数量
+        /// </summary>
+        public int Yita { get; set; }
+        /// <summary>
+        /// 路段所在路径
+        /// </summary>
+        public List<LuJing> At { get; set; }
+    }
+}
