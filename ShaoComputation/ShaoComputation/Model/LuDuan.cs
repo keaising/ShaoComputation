@@ -9,6 +9,7 @@ namespace ShaoComputation.Model
 {
     public class LuDuan
     {
+        public int No { get; set; }
         public int start { get; set; }
         public int end { get; set; }
         /// <summary>
@@ -27,6 +28,14 @@ namespace ShaoComputation.Model
         /// 公交车路阻 值
         /// </summary>
         public double tb { get; set; }
+        /// <summary>
+        /// 小汽车路阻 定值
+        /// </summary>
+        public double tc0 { get; set; }
+        /// <summary>
+        /// 公交车路阻 定值
+        /// </summary>
+        public double tb0 { get; set; }
         /// <summary>
         /// 不同路径叠加在该路段上小汽车的人数
         /// </summary>
