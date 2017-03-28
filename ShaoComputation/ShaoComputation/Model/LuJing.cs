@@ -8,13 +8,13 @@ namespace ShaoComputation.Model
 {
     public class LuJing
     {
-        public int start { get; set; }
-        public int end { get; set; }
+        public Node start { get; set; }
+        public Node end { get; set; }
         /// <summary>
         /// 路径构成
         /// </summary>
         public List<LuDuan> Contain { get; set; }
-        public List<int> Points { get; set; }
+        public List<Node> Points { get; set; }
         /// <summary>
         /// 小汽车费用
         /// </summary>

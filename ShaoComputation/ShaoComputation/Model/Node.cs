@@ -12,14 +12,10 @@ namespace ShaoComputation.Model
         /// 编号
         /// </summary>
         public int No { get; set; }
+        public List<Node> Neighbor { get; set; }
         /// <summary>
-        /// 后继节点
+        /// 已经访问过的点
         /// </summary>
-        public List<Node> Next { get; set; }
-        /// <summary>
-        /// 当前路径使用过了
-        /// </summary>
-        public bool StackUsed { get; set; }
-        public bool NextUsed { get; set; }
+        public List<Node> NextUsed { get; set; }
     }
 }

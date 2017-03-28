@@ -1,4 +1,5 @@
-﻿using ShaoComputation.Model;
+﻿using ShaoComputation.Helper;
+using ShaoComputation.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,55 +19,47 @@ namespace ShaoComputation.Computation
             return new List<OD>();
         }
 
-        public static List<LuJing> GetAllPath(OD od, List<LuDuan> luDuans)
+        public static List<LuJing> GetAllPath(OD od, List<LuDuan> luDuans, List<Node> nodes)
         {
             var lujings = new List<LuJing>();
-            Stack<int> stack = new Stack<int>();
-            var flag = false;
-            var lujingUsed = new List<int>();
-            var nextUsed = new List<int>();
-            nextUsed.Add(od.start);
-            stack.Push(od.start);
-            lujingUsed.Add(od.start);
+            var stack = new Stack<Node>();
+            var lujingUsed = new List<Node>();
+            var lujingNos = new List<List<int>>();
+
+            stack.Push(nodes.NumOf(od.start));
+            lujingUsed.Add(nodes.NumOf(od.start));
 
             while (stack.Count > 0)
             {
-                var neighbor = GetNeighbor(stack, luDuans, lujingUsed, nextUsed);
-                if (neighbor != 0)
+                var neighbor = GetNeighbor(stack, luDuans, lujingUsed, nodes);
+                if (neighbor != null)
                 {
-                    if (!nextUsed.Contains(neighbor))
-                    {
-                        nextUsed.Add(neighbor);
-                    }
-                    if (!lujingUsed.Contains(neighbor))
+                    if (!lujingUsed.Any(n => n.No == neighbor.No))
                     {
                         lujingUsed.Add(neighbor);
                     }
                     stack.Push(neighbor);
 
-                    if (neighbor == od.end)
+                    if (neighbor.No == od.end)
                     {
-                        lujings.Add(OutPutLuJing(stack));
+                        var lujing = OutPutLuJing(stack);
+                        lujings.Add(lujing);
+                        lujingNos.Add(lujing.Points.Select(p => p.No).ToList());
+                        stack.Peek().NextUsed = new List<Node>();
                         stack.Pop();
-                        if (flag)
-                        {
-                            lujingUsed.RemoveAll(u => u == neighbor);
-                            nextUsed.RemoveAll(u => u == neighbor);
-                            flag = true;
-                        }
+                        //lujingUsed.RemoveAll(n => n.No == neighbor.No);
                     }
                     else
                         continue;
                 }
                 else
                 {
-                    var last = nextUsed.Last();
-                    nextUsed.RemoveAll(u => u == last);
-                    //nextUsed.Add(stack.Peek());
-                    //var frontPoint = stack.Count == 1 ? 0 : stack.ElementAt(1);
-                    //nextUsed = ReleaseFollowPoint(nextUsed, stack.First(), frontPoint, luDuans, lujingUsed);
-                    lujingUsed.RemoveAll(u => u == last);
+                    var peekNode = stack.Peek().No;
+                    stack.Peek().NextUsed = new List<Node>();
+                    lujingUsed.RemoveAll(n => n.No == stack.Peek().No);
+                    var show = stack.Select(n => n.No).ToList();
                     stack.Pop();
+                    stack.Peek().NextUsed.Add(nodes.NumOf(peekNode));
                 }
             }
             return lujings;
@@ -75,22 +68,22 @@ namespace ShaoComputation.Computation
         /// <summary>
         /// 找到可用的邻居
         /// </summary>
-        static int GetNeighbor(Stack<int> stack, List<LuDuan> luDuans, List<int> lujingUsed, List<int> nextUsed)
+        static Node GetNeighbor(Stack<Node> stack, List<LuDuan> luDuans, List<Node> lujingUsed, List<Node> allNodes)
         {
-            var ends = luDuans.Where(l => l.start == stack.Peek()).Select(l => l.end).ToList();
+            var ends = luDuans.Where(l => l.start == stack.Peek().No).Select(l => l.end).ToList();
             if (ends != null && ends.Count > 0)
             {
                 foreach (var end in ends)
                 {
-                    if (!lujingUsed.Contains(end) && !nextUsed.Contains(end))
-                    //if (!nextUsed.Contains(end))
+                    var endNode = allNodes.NumOf(end);
+                    if (!lujingUsed.Contains(endNode) && !stack.Peek().NextUsed.Contains(endNode))
                     {
-                        return end;
+                        return endNode;
                     }
                 }
-                return 0;
+                return null;
             }
-            else return 0;
+            else return null;
         }
 
         static List<int> ReleaseFollowPoint(List<int> backup, int pointBack, int pointFront, List<LuDuan> luduans, List<int> lujingUsed)
@@ -130,10 +123,10 @@ namespace ShaoComputation.Computation
         /// <summary>
         /// 从Stack转换为路径
         /// </summary>
-        public static LuJing OutPutLuJing(Stack<int> stack)
+        public static LuJing OutPutLuJing(Stack<Node> stack)
         {
             var lujing = new LuJing();
-            lujing.Points = new List<int>();
+            lujing.Points = new List<Node>();
             foreach (var item in stack)
             {
                 lujing.Points.Add(item);

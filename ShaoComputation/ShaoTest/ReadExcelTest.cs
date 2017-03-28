@@ -44,5 +44,16 @@ namespace ShaoTest
 
             Assert.AreEqual(50, result.Count);
         }
+
+        [TestMethod]
+        [TestCategory("ReadExcel")]
+        public void Nodes()
+        {
+            var fullUri = string.Format($"{Environment.CurrentDirectory}\\OD.xlsx");
+            var result = ReadExcel.Nodes(fullUri);
+            result = result.OrderBy(od => od.No).ToList();
+
+            Assert.AreEqual(50, result.Count);
+        }
     }
 }

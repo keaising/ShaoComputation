@@ -197,5 +197,53 @@ namespace ShaoComputation.Helper
             #endregion
             return luDuans;
         }
+
+        public static List<Node> Nodes(String fullUri)
+        {
+            Excel.Application xlApp = new Excel.Application();
+            Excel.Workbook xlWorkbook = xlApp.Workbooks.Open(fullUri);
+            Excel._Worksheet xlWorksheet = xlWorkbook.Sheets[4];
+            Excel.Range xlRange = xlWorksheet.UsedRange;
+            int rowCount = xlRange.Rows.Count;
+            int colCount = xlRange.Columns.Count;
+
+            var nodes = new List<Node>();
+            for (int i = 1; i < 17; i++)
+            {
+                nodes.Add(new Node
+                {
+                    Neighbor = new List<Node>(),
+                    NextUsed = new List<Node>(),
+                    No = i
+                });
+            }
+
+            for (int i = 2; i < rowCount + 1; i++)
+            {
+                for (int j = 2; j <= colCount; j++)
+                {
+                    if (xlRange.Cells[i, j] != null && xlRange.Cells[i, j].Value2 != null)
+                    {
+                        var value = xlRange.Cells[i, j].Value2.ToString();
+                        var value2 = Convert.ToInt32(value);
+                        if (value2 != 0)
+                        {
+                            nodes.NumOf(i - 1).Neighbor.Add(nodes.NumOf(j - 1));
+                        }
+                    }
+                }
+            }
+            #region release
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            Marshal.ReleaseComObject(xlRange);
+            Marshal.ReleaseComObject(xlWorksheet);
+            xlWorkbook.Close();
+            Marshal.ReleaseComObject(xlWorkbook);
+            xlApp.Quit();
+            Marshal.ReleaseComObject(xlApp);
+            #endregion
+            return nodes;
+        }
     }
 }
