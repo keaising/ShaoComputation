@@ -9,7 +9,7 @@ using System.Linq;
 namespace ShaoTest
 {
     [TestClass]
-    public class Test
+    public class ReadExcelTest
     {
         [TestMethod]
         [TestCategory("ReadExcel")]

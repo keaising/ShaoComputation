@@ -162,7 +162,6 @@ namespace ShaoComputation.Helper
 
         public static List<LuDuan> LuduanAndPoint(List<LuDuan> luDuans, String fullUri)
         {
-            var LuDuans = new List<LuDuan>();
             Excel.Application xlApp = new Excel.Application();
             Excel.Workbook xlWorkbook = xlApp.Workbooks.Open(fullUri);
             Excel._Worksheet xlWorksheet = xlWorkbook.Sheets[4];
@@ -170,9 +169,8 @@ namespace ShaoComputation.Helper
             int rowCount = xlRange.Rows.Count;
             int colCount = xlRange.Columns.Count;
 
-            Parallel.For(2, rowCount + 1, (i) =>
+            for (int i = 2; i < rowCount + 1; i++)
             {
-                var luduan = new LuDuan();
                 for (int j = 2; j <= colCount; j++)
                 {
                     if (xlRange.Cells[i, j] != null && xlRange.Cells[i, j].Value2 != null)
@@ -186,8 +184,7 @@ namespace ShaoComputation.Helper
                         }
                     }
                 }
-                LuDuans.Add(luduan);
-            });
+            }
             #region release
             GC.Collect();
             GC.WaitForPendingFinalizers();
@@ -198,7 +195,7 @@ namespace ShaoComputation.Helper
             xlApp.Quit();
             Marshal.ReleaseComObject(xlApp);
             #endregion
-            return LuDuans;
-        } 
+            return luDuans;
+        }
     }
 }

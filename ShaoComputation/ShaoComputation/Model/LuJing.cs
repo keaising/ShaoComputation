@@ -14,6 +14,7 @@ namespace ShaoComputation.Model
         /// 路径构成
         /// </summary>
         public List<LuDuan> Contain { get; set; }
+        public List<int> Points { get; set; }
         /// <summary>
         /// 小汽车费用
         /// </summary>
