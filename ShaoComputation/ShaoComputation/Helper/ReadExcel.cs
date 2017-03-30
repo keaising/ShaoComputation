@@ -37,9 +37,11 @@ namespace ShaoComputation.Helper
                 {
                     if (xlRange.Cells[i, j] != null && xlRange.Cells[i, j].Value2 != null)
                     {
-                        var od = new OD();
-                        od.start = i - 1;
-                        od.end = j - 1;
+                        var od = new OD()
+                        {
+                            start = i - 1,
+                            end = j - 1
+                        };
                         var value = xlRange.Cells[i, j].Value2.ToString();
                         od.Q_rs = Convert.ToDouble(value);
                         ODs.Add(od);
@@ -172,47 +174,47 @@ namespace ShaoComputation.Helper
                     {
                         case 1:
                             var value1 = xlRange.Cells[1, j].Value2.ToString();
-                            Varias.mu = Convert.ToInt32(value1);
+                            Varias.Mu = Convert.ToInt32(value1);
                             break;
                         case 2:
                             var value2 = xlRange.Cells[1, j].Value2.ToString();
-                            Varias.alpha_b = Convert.ToDouble(value2);
+                            Varias.Alpha_b = Convert.ToDouble(value2);
                             break;
                         case 3:
                             var value3 = xlRange.Cells[1, j].Value2.ToString();
-                            Varias.alpha_c = Convert.ToDouble(value3);
+                            Varias.Alpha_c = Convert.ToDouble(value3);
                             break;
                         case 4:
                             var value4 = xlRange.Cells[1, j].Value2.ToString();
-                            Varias.beta_b = Convert.ToDouble(value4);
+                            Varias.Beta_b = Convert.ToDouble(value4);
                             break;
                         case 5:
                             var value5 = xlRange.Cells[1, j].Value2.ToString();
-                            Varias.beta_c = Convert.ToDouble(value5);
+                            Varias.Beta_c = Convert.ToDouble(value5);
                             break;
                         case 6:
                             var value6 = xlRange.Cells[1, j].Value2.ToString();
-                            Varias.gamma_b = Convert.ToDouble(value6);
+                            Varias.Gamma_b = Convert.ToDouble(value6);
                             break;
                         case 7:
                             var value7 = xlRange.Cells[1, j].Value2.ToString();
-                            Varias.gamma_c = Convert.ToDouble(value7);
+                            Varias.Gamma_c = Convert.ToDouble(value7);
                             break;
                         case 8:
                             var value8 = xlRange.Cells[1, j].Value2.ToString();
-                            Varias.gamma_a = Convert.ToDouble(value8);
+                            Varias.Gamma_a = Convert.ToDouble(value8);
                             break;
                         case 9:
                             var value9 = xlRange.Cells[1, j].Value2.ToString();
-                            Varias.gamma_m = Convert.ToDouble(value9);
+                            Varias.Gamma_m = Convert.ToDouble(value9);
                             break;
                         case 10:
                             var value10 = xlRange.Cells[1, j].Value2.ToString();
-                            Varias.gamma_tc = Convert.ToDouble(value10);
+                            Varias.Gamma_tc = Convert.ToDouble(value10);
                             break;
                         case 11:
                             var value11 = xlRange.Cells[1, j].Value2.ToString();
-                            Varias.gamma_tb = Convert.ToDouble(value11);
+                            Varias.Gamma_tb = Convert.ToDouble(value11);
                             break;
                         case 12:
                             var value12 = xlRange.Cells[1, j].Value2.ToString();
@@ -224,7 +226,7 @@ namespace ShaoComputation.Helper
                             break;
                         case 14:
                             var value14 = xlRange.Cells[1, j].Value2.ToString();
-                            Varias.money = Convert.ToDouble(value14);
+                            Varias.Money = Convert.ToDouble(value14);
                             break;
                         case 15:
                             var value15 = xlRange.Cells[1, j].Value2.ToString();

@@ -18,9 +18,9 @@ namespace ShaoComputation.Computation
         {
             var luDuanNo = l.LuDuans.Select(ld => ld.tc).ToList();
             var luduans = Allluduans.Where(ld => luDuanNo.Contains(ld.No));
-            l.ec = luduans.Select(ld => ld.tc).Sum() * (Varias.gamma_c + Varias.gamma_tc);
-            var comfort = luduans.Select(ld => ld.tb * ld.Fab / (Varias.Bb * ld.F)).Sum() * Varias.gamma_a;
-            l.eb = luduans.Select(ld => ld.tb).Sum() * (Varias.gamma_b) + Varias.gamma_m * Varias.money + comfort;
+            l.ec = luduans.Select(ld => ld.tc).Sum() * (Varias.Gamma_c + Varias.Gamma_tc);
+            var comfort = luduans.Select(ld => ld.tb * ld.Fab / (Varias.Bb * ld.F)).Sum() * Varias.Gamma_a;
+            l.eb = luduans.Select(ld => ld.tb).Sum() * (Varias.Gamma_b) + Varias.Gamma_m * Varias.Money + comfort;
         }
     }
 }

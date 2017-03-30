@@ -11,11 +11,11 @@ namespace ShaoComputation.Const
         /// <summary>
         /// 公交车转换为小汽车的比例系数
         /// </summary>
-        public static double mu { get; set; }
+        public static double Mu { get; set; }
         /// <summary>
         /// 公交票价
         /// </summary>
-        public static double money { get; set; }
+        public static double Money { get; set; }
         /// <summary>
         /// 小汽车平均载客量
         /// </summary>
@@ -27,43 +27,43 @@ namespace ShaoComputation.Const
         /// <summary>
         /// BPR参数
         /// </summary>
-        public static double alpha_b { get; set; }
+        public static double Alpha_b { get; set; }
         /// <summary>
         /// BPR参数
         /// </summary>
-        public static double alpha_c { get; set; }
+        public static double Alpha_c { get; set; }
         /// <summary>
         /// BPR参数
         /// </summary>
-        public static double beta_b { get; set; }
+        public static double Beta_b { get; set; }
         /// <summary>
         /// BPR参数
         /// </summary>
-        public static double beta_c { get; set; }
+        public static double Beta_c { get; set; }
         /// <summary>
         /// BPR参数
         /// </summary>
-        public static double gamma_b { get; set; }
+        public static double Gamma_b { get; set; }
         /// <summary>
         /// BPR参数
         /// </summary>
-        public static double gamma_c { get; set; }
+        public static double Gamma_c { get; set; }
         /// <summary>
         /// BPR参数
         /// </summary>
-        public static double gamma_a { get; set; }
+        public static double Gamma_a { get; set; }
         /// <summary>
         /// BPR参数
         /// </summary>
-        public static double gamma_m { get; set; }
+        public static double Gamma_m { get; set; }
         /// <summary>
         /// BPR参数
         /// </summary>
-        public static double gamma_tc { get; set; }
+        public static double Gamma_tc { get; set; }
         /// <summary>
         /// BPR参数
         /// </summary>
-        public static double gamma_tb { get; set; }
+        public static double Gamma_tb { get; set; }
         public static int F_low { get; set; }
         public static int F_up { get; set; }
         public static double MaxValue { get; set; }

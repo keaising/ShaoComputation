@@ -25,20 +25,20 @@ namespace ShaoComputation.Computation
             {
                 if (l.Lambda == 0)
                 {
-                    l.tc = l.tc0 * (1 + Varias.alpha_c * (Math.Pow(((l.Xac + l.Xab * Varias.mu) / (l.N * l.C)), Varias.beta_c)));
-                    l.tb = l.tb0 * (1 + Varias.alpha_b * (Math.Pow(((l.Xac + l.Xab * Varias.mu) / (l.N * l.C)), Varias.beta_b)));
+                    l.tc = l.tc0 * (1 + Varias.Alpha_c * (Math.Pow(((l.Xac + l.Xab * Varias.Mu) / (l.N * l.C)), Varias.Beta_c)));
+                    l.tb = l.tb0 * (1 + Varias.Alpha_b * (Math.Pow(((l.Xac + l.Xab * Varias.Mu) / (l.N * l.C)), Varias.Beta_b)));
                 }
                 else
                 {
                     if ((l.Lambda - l.Yita) == 0)
                     {
                         l.tc = Varias.MaxValue;
-                        l.tb = l.tb0 * (1 + Varias.alpha_b * (Math.Pow(((l.Xab * Varias.mu) / (l.Yita * l.C)), Varias.beta_b)));
+                        l.tb = l.tb0 * (1 + Varias.Alpha_b * (Math.Pow(((l.Xab * Varias.Mu) / (l.Yita * l.C)), Varias.Beta_b)));
                     }
                     else
                     {
-                        l.tc = l.tc0 * (1 + Varias.alpha_c * (Math.Pow((l.Xac / ((l.N - l.Yita) * l.C)), Varias.beta_c)));
-                        l.tb = l.tb0 * (1 + Varias.alpha_b * (Math.Pow(((l.Xab * Varias.mu) / (l.Yita * l.C)), Varias.beta_b)));
+                        l.tc = l.tc0 * (1 + Varias.Alpha_c * (Math.Pow((l.Xac / ((l.N - l.Yita) * l.C)), Varias.Beta_c)));
+                        l.tb = l.tb0 * (1 + Varias.Alpha_b * (Math.Pow(((l.Xab * Varias.Mu) / (l.Yita * l.C)), Varias.Beta_b)));
                     }
                 }
             }
