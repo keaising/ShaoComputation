@@ -65,7 +65,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Computation\BPR.cs" />
+    <Compile Include="Computation\EPC.cs" />
     <Compile Include="Computation\GenarateLuJing.cs" />
+    <Compile Include="Computation\InitOD.cs" />
+    <Compile Include="Computation\Iteration.cs" />
     <Compile Include="Const\Varia.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
@@ -73,6 +77,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helper\LuduanHelper.cs" />
     <Compile Include="Helper\NodeHelper.cs" />
     <Compile Include="Helper\Randam.cs" />
     <Compile Include="Helper\ReadExcel.cs" />

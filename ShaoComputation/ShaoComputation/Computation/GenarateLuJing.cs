@@ -50,7 +50,7 @@ namespace ShaoComputation.Computation
                     {
                         var lujing = OutPutLuJing(stack);
                         lujings.Add(lujing);
-                        lujingNos.Add(lujing.Points.Select(p => p.No).ToList());
+                        lujingNos.Add(lujing.Nodes.Select(p => p.No).ToList());
                         nodes.NumOf(stack.Peek().No).NextUsed = new List<Node>();
                         stack.Pop();
                     }
@@ -98,12 +98,12 @@ namespace ShaoComputation.Computation
         public static LuJing OutPutLuJing(Stack<Node> stack)
         {
             var lujing = new LuJing();
-            lujing.Points = new List<Node>();
+            lujing.Nodes = new List<Node>();
             foreach (var item in stack)
             {
-                lujing.Points.Add(item);
+                lujing.Nodes.Add(item);
             }
-            lujing.Points.Reverse();
+            lujing.Nodes.Reverse();
             lujing.start = stack.Last();
             lujing.end = stack.Peek();
             return lujing;

@@ -66,5 +66,6 @@ namespace ShaoComputation.Const
         public static double gamma_tb { get; set; }
         public static int F_low = 200;
         public static int F_up = 300;
+        public static double MaxValue { get; set; }
     }
 }

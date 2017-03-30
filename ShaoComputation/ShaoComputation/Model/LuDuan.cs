@@ -39,43 +39,19 @@ namespace ShaoComputation.Model
         /// <summary>
         /// 不同路径叠加在该路段上小汽车的人数
         /// </summary>
-        public double Fc
-        {
-            get
-            {
-                return At.Sum(l => l.RenShu_c);
-            }
-        }
+        public double Fac { get; set; }
         /// <summary>
         /// 不同路径叠加在该路段上公交车的人数
         /// </summary>
-        public double Fb
-        {
-            get
-            {
-                return At.Sum(l => l.RenShu_b);
-            }
-        }
+        public double Fab { get; set; }
         /// <summary>
         /// 不同路径叠加在该路段上公交车数量
         /// </summary>
-        public double Xb
-        {
-            get
-            {
-                return F * Varias.mu;
-            }
-        }
+        public double Xab { get; set; }
         /// <summary>
         /// 不同路径叠加在该路段上小汽车数量
         /// </summary>
-        public double Xc
-        {
-            get
-            {
-                return Fc / Varias.Bc;
-            }
-        }
+        public double Xac { get; set; }
         /// <summary>
         /// 路段公交车发车频率
         /// </summary>

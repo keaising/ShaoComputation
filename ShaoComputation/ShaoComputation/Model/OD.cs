@@ -14,8 +14,26 @@ namespace ShaoComputation.Model
         public double Q_rs { get; set; }
         public double q_rs_c { get; set; }
         public double q_rs_b { get; set; }
-        public double ec_min { get; set; }
-        public double eb_min { get; set; }
+        /// <summary>
+        /// 小汽车路径最小值
+        /// </summary>
+        public double ec_min
+        {
+            get
+            {
+                return LuJings.Min(l => l.ec);
+            }
+        }
+        /// <summary>
+        /// 公交车路径最小值
+        /// </summary>
+        public double eb_min
+        {
+            get
+            { 
+                return LuJings.Min(l => l.eb);
+            }
+        }
         public List<LuJing> LuJings { get; set; }
     }
 }

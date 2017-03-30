@@ -33,14 +33,12 @@ namespace ShaoTest
             var od = new OD();
             od.start = 8;
             od.end = 14;
-
-
             var fullUri = string.Format($"{Environment.CurrentDirectory}\\OD.xlsx");
             var result = ReadExcel.LuDuan(fullUri);
             result = result.OrderBy(l => l.No).ToList();
             var luduans = ReadExcel.LuduanAndPoint(result, fullUri);
             var nodes = ReadExcel.Nodes(fullUri);
-
+             
             var result2 = GenarateLuJing.GetAllPath(od, luduans, nodes);
             Assert.AreEqual(1, 1);
         }
