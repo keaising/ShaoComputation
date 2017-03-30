@@ -65,6 +65,21 @@ namespace ShaoComputation.Computation
                     od.q_rs_c = od.LuJings.Sum(lj => lj.Fpc);
                     od.q_rs_b = od.Q_rs - od.q_rs_c;
                 }
+                var v1 = new List<double>();
+                var v2 = new List<double>();
+                var v3 = new List<double>();
+                var v4 = new List<double>();
+                var v5 = new List<double>();
+                foreach (var od in ods)
+                {
+                    v1.Add(od.LuJings.Sum(lj => (lj.ec - od.ec_min) * lj.Fpc));
+                    v2.Add(od.ec_min * od.q_rs_c);
+                    v3.Add(od.LuJings.Sum(lj => (lj.eb - od.eb_min) * lj.Fpc));
+                    v4.Add(od.eb_min * od.q_rs_b);
+                    v5.Add(od.q_rs_c - od.Q_rs / (1 + Math.Pow(Math.E, (od.ec_min - od.eb_min))));
+                }
+                //todo: 待议
+                var final = v1.Sum() / v2.Sum() + v3.Sum() / v4.Sum() + Math.Sqrt(v5.Sum(v => Math.Pow(v, 2))) / ods.Sum(od => od.Q_rs);
             }
         }
     }
