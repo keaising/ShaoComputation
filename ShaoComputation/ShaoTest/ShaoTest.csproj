@@ -51,6 +51,7 @@
     <Compile Include="GenarateLuJingTest.cs" />
     <Compile Include="ReadExcelTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Run.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

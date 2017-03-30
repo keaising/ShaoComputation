@@ -13,16 +13,13 @@ namespace ShaoComputation.Computation
     /// </summary>
     public class Iteration
     {
-        public static void Run()
+        public static void Run(List<OD> ods, List<LuDuan> luduans, List<Node> nodes)
         {
-            var ods = new List<OD>();
-            var luduans = new List<LuDuan>();
-            var nodes = new List<Node>();
-
             ods.initOD();
-            var i = 1;
-            while (i > 0)
+            var i = 0;
+            while (i < 1)
             {
+                i++;
                 foreach (var od in ods)
                 {
                     foreach (var lujing in od.LuJings)

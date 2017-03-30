@@ -31,8 +31,8 @@ namespace ShaoTest
         public void GetAllPath()
         {
             var od = new OD();
-            od.start = 8;
-            od.end = 14;
+            od.start = 3;
+            od.end = 5;
             var fullUri = string.Format($"{Environment.CurrentDirectory}\\OD.xlsx");
             var result = ReadExcel.LuDuan(fullUri);
             result = result.OrderBy(l => l.No).ToList();
