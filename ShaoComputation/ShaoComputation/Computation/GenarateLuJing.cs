@@ -22,6 +22,19 @@ namespace ShaoComputation.Computation
             foreach (var od in ods)
             {
                 od.LuJings = GetAllPath(od, luDuans, nodes);
+                foreach (var lujing in od.LuJings) //添加路段所在路径信息
+                {
+                    foreach (var luduan in lujing.LuDuans)
+                    {
+                        if (luduan.No != 0)
+                        {
+                            if (!luDuans.NumOf(luduan.No).At.Any(l => l.start == lujing.start && l.end == lujing.end))
+                            {
+                                luDuans.NumOf(luduan.No).At.Add(lujing);
+                            }
+                        }
+                    }
+                }
             }
             return ods;
         }
@@ -69,6 +82,7 @@ namespace ShaoComputation.Computation
                     }
                 }
             }
+            GetLuduansByNode(luDuans, lujings);
             return lujings;
         }
 
@@ -90,6 +104,25 @@ namespace ShaoComputation.Computation
                 return null;
             }
             else return null;
+        }
+
+        /// <summary>
+        /// 根据路径节点获取构成的路段
+        /// </summary>
+        public static void GetLuduansByNode(List<LuDuan> luduans, List<LuJing> lujings)
+        {
+            foreach (var lujing in lujings)
+            {
+                lujing.LuDuans = new List<LuDuan>();
+                if (lujing.Nodes != null && lujing.Nodes.Count > 0)
+                {
+                    for (int i = 0; i < lujing.Nodes.Count - 1; i++)
+                    {
+                        var luduan = luduans.StartEnd(lujing.Nodes[i].No, lujing.Nodes[i + 1].No);
+                        lujing.LuDuans.Add(luduan);
+                    }
+                }
+            }
         }
 
         /// <summary>

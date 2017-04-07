@@ -15,7 +15,7 @@ namespace ShaoTest
     public class Run
     {
         [TestMethod]
-        public void R()
+        public void Running()
         {
             var fullUri = string.Format($"{Environment.CurrentDirectory}\\OD.xlsx");
             var result = ReadExcel.LuDuan(fullUri);
@@ -26,6 +26,24 @@ namespace ShaoTest
             foreach (var od in ods)
             {
                 od.LuJings = GenarateLuJing.GetAllPath(od, luduans, nodes);
+                foreach (var lujing in od.LuJings) //添加路段所在路径信息
+                {
+                    foreach (var luduan in lujing.LuDuans)
+                    {
+                        if (luduan.No != 0)
+                        {
+                            if (luduans.NumOf(luduan.No).At == null)
+                            {
+                                luduans.NumOf(luduan.No).At = new List<LuJing>();
+                            }
+
+                            if (!luduans.NumOf(luduan.No).At.Any(l => l.start.No == lujing.Nodes.First().No && l.end.No == lujing.Nodes.Last().No))
+                            {
+                                luduans.NumOf(luduan.No).At.Add(lujing);
+                            }
+                        }
+                    }
+                }
             }
             Iteration.Run(ods, luduans, nodes);
         }
