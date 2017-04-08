@@ -24,7 +24,7 @@ namespace ShaoComputation.Computation
         {
             ods.initOD();
             var i = 0;
-
+            var finals = new List<double>();
             while (i < Varias.Count)
             {
                 i++;
@@ -39,13 +39,19 @@ namespace ShaoComputation.Computation
                         }
                         lujing.Fee(luduans);
                     }
+                }
+                foreach (var od in ods)
+                {
+                    var flag = true;
                     if (od.Q_rs_c <= od.Q_rs / (1 + Math.Pow(Math.E, (od.Ec_min - od.Eb_min)))) //判断往QRSC还是QRSB加载
                     {
                         foreach (var lujing in od.LuJings)
                         {
-                            if (lujing.ec == od.Ec_min)
+                            //flag保证在多个最小值的情况下最多只分配一次
+                            if (lujing.ec == od.Ec_min && flag)
                             {
                                 lujing.Fpc = (1 - 1 / i) * lujing.Fpc + 1 / i * od.Q_rs;
+                                flag = false;
                             }
                             else
                             {
@@ -85,10 +91,12 @@ namespace ShaoComputation.Computation
                 }
                 //todo: 待议
                 var final = v1.Sum() / v2.Sum() + v3.Sum() / v4.Sum() + Math.Sqrt(v5.Sum(v => Math.Pow(v, 2))) / ods.Sum(od => od.Q_rs);
+                finals.Add(final);
             }
             #region 导出到Excel
+            //OD
             IWorkbook workbook = new XSSFWorkbook();
-            ISheet sheet1 = workbook.CreateSheet("Sheet1");
+            ISheet sheet1 = workbook.CreateSheet("OD");
             IRow row0 = sheet1.CreateRow(0);
             row0.CreateCell(0).SetCellValue("Start");
             row0.CreateCell(1).SetCellValue("End");
@@ -108,12 +116,79 @@ namespace ShaoComputation.Computation
                 row.CreateCell(4).SetCellValue(od.Ec_min);
                 row.CreateCell(5).SetCellValue(od.Eb_min);
             }
-            var newFile = string.Format(@"D:\Data\1.xlsx");
+            //LuDuan
+            ISheet sheet2 = workbook.CreateSheet("路段信息");
+            IRow row0LuDuan = sheet2.CreateRow(0);
+            row0LuDuan.CreateCell(0).SetCellValue("编号");
+            row0LuDuan.CreateCell(1).SetCellValue("Start");
+            row0LuDuan.CreateCell(2).SetCellValue("End");
+            row0LuDuan.CreateCell(3).SetCellValue("Fac");
+            row0LuDuan.CreateCell(4).SetCellValue("Fab");
+            row0LuDuan.CreateCell(5).SetCellValue("Xac");
+            row0LuDuan.CreateCell(6).SetCellValue("Xab");
+            row0LuDuan.CreateCell(7).SetCellValue("Tac");
+            row0LuDuan.CreateCell(8).SetCellValue("Tab");
+            var rowCount2 = 0;
+            foreach (var luduan in luduans)
+            {
+                rowCount2 = rowCount2 + 1;
+                IRow row = sheet2.CreateRow(rowCount2);
+                row.CreateCell(0).SetCellValue(luduan.No);
+                row.CreateCell(1).SetCellValue(luduan.start);
+                row.CreateCell(2).SetCellValue(luduan.end);
+                row.CreateCell(3).SetCellValue(luduan.Fac);
+                row.CreateCell(4).SetCellValue(luduan.Fab);
+                row.CreateCell(5).SetCellValue(luduan.Xac);
+                row.CreateCell(6).SetCellValue(luduan.Xab);
+                row.CreateCell(7).SetCellValue(luduan.tc);
+                row.CreateCell(8).SetCellValue(luduan.tb);
+            }
+            //LuJing
+            ISheet sheet3 = workbook.CreateSheet("路径信息");
+            IRow row0LuJing = sheet3.CreateRow(0);
+            row0LuJing.CreateCell(0).SetCellValue("Start");
+            row0LuJing.CreateCell(1).SetCellValue("End");
+            row0LuJing.CreateCell(2).SetCellValue("Fpc");
+            row0LuJing.CreateCell(3).SetCellValue("Fpb");
+            row0LuJing.CreateCell(4).SetCellValue("Ec");
+            row0LuJing.CreateCell(5).SetCellValue("Eb");
+            row0LuJing.CreateCell(6).SetCellValue("Nodes");
+            var rowCount3 = 0;
+            foreach (var od in ods)
+            {
+                foreach (var lujing in od.LuJings)
+                {
+                    rowCount3 = rowCount3 + 1;
+                    IRow row = sheet3.CreateRow(rowCount3);
+                    row.CreateCell(0).SetCellValue(lujing.start.No);
+                    row.CreateCell(1).SetCellValue(lujing.end.No);
+                    row.CreateCell(2).SetCellValue(lujing.Fpc);
+                    row.CreateCell(3).SetCellValue(lujing.Fpb);
+                    row.CreateCell(4).SetCellValue(lujing.ec);
+                    row.CreateCell(5).SetCellValue(lujing.eb);
+                    row.CreateCell(6).SetCellValue(string.Format(string.Join(",", lujing.Nodes.Select(n => n.No))));
+                }
+            }
+            //Final
+            ISheet sheet4 = workbook.CreateSheet("Final");
+            IRow rowFinal = sheet4.CreateRow(0);
+            rowFinal.CreateCell(0).SetCellValue("次数");
+            rowFinal.CreateCell(1).SetCellValue("值");
+            var rowCount4 = 0;
+            foreach (var final in finals)
+            {
+                rowCount4 = rowCount4 + 1;
+                IRow row = sheet4.CreateRow(rowCount4);
+                row.CreateCell(0).SetCellValue(rowCount4);
+                row.CreateCell(1).SetCellValue(final);
+            }
+
+            var newFile = string.Format($"D:\\Data\\{DateTime.Now.Day}-{DateTime.Now.Hour}-{DateTime.Now.Minute}-计算结果.xlsx");
             FileStream sw = File.Create(newFile);
             workbook.Write(sw);
             sw.Close();
             #endregion
-            #region
+            #region 导出所有数据到Json
             var newfile = string.Format($"D:\\Data\\{DateTime.Now.Day}-{DateTime.Now.Hour}-{DateTime.Now.Minute}-od.json");
             using (StreamWriter file = new StreamWriter(newfile, false))
             {
