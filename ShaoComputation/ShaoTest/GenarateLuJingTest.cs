@@ -32,8 +32,8 @@ namespace ShaoTest
         {
             var od = new OD()
             {
-                start = 3,
-                end = 5
+                Start = 3,
+                End = 5
             };
             var fullUri = string.Format($"{Environment.CurrentDirectory}\\OD.xlsx");
             var result = ReadExcel.LuDuan(fullUri);

@@ -16,8 +16,8 @@ namespace ShaoComputation.Computation
         {
             foreach (var od in ods)
             {
-                od.q_rs_c = 0;
-                od.q_rs_b = 0;
+                od.Q_rs_c = 0;
+                od.Q_rs_b = 0;
                 foreach (var lujing in od.LuJings)
                 {
                     lujing.Fpc = 0;

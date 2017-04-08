@@ -9,15 +9,15 @@ namespace ShaoComputation.Model
     public class OD
     {
         public int No { get; set; }
-        public int start { get; set; }
-        public int end { get; set; }
+        public int Start { get; set; }
+        public int End { get; set; }
         public double Q_rs { get; set; }
-        public double q_rs_c { get; set; }
-        public double q_rs_b { get; set; }
+        public double Q_rs_c { get; set; }
+        public double Q_rs_b { get; set; }
         /// <summary>
         /// 小汽车路径最小值
         /// </summary>
-        public double ec_min
+        public double Ec_min
         {
             get
             {
@@ -27,7 +27,7 @@ namespace ShaoComputation.Model
         /// <summary>
         /// 公交车路径最小值
         /// </summary>
-        public double eb_min
+        public double Eb_min
         {
             get
             { 

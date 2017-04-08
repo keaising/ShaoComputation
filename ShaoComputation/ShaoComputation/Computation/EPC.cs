@@ -16,7 +16,7 @@ namespace ShaoComputation.Computation
         /// </summary>
         public static void Fee(this LuJing l, List<LuDuan> Allluduans)
         {
-            var luDuanNo = l.LuDuans.Select(ld => ld.tc).ToList();
+            var luDuanNo = l.LuDuans.Select(ld => ld.No).ToList();
             var luduans = Allluduans.Where(ld => luDuanNo.Contains(ld.No));
             l.ec = luduans.Select(ld => ld.tc).Sum() * (Varias.Gamma_c + Varias.Gamma_tc);
             var comfort = luduans.Select(ld => ld.tb * ld.Fab / (Varias.Bb * ld.F)).Sum() * Varias.Gamma_a;

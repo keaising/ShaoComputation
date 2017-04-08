@@ -39,8 +39,8 @@ namespace ShaoComputation.Helper
                     {
                         var od = new OD()
                         {
-                            start = i - 1,
-                            end = j - 1
+                            Start = i - 1,
+                            End = j - 1
                         };
                         var value = xlRange.Cells[i, j].Value2.ToString();
                         od.Q_rs = Convert.ToDouble(value);

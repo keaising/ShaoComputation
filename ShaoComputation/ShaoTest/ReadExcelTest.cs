@@ -17,7 +17,7 @@ namespace ShaoTest
         {
             var fullUri = string.Format($"{Environment.CurrentDirectory}\\OD.xlsx");
             var result = ReadExcel.OD(fullUri);
-            result = result.OrderBy(od => od.start).ThenBy(od => od.end).ToList();
+            result = result.OrderBy(od => od.Start).ThenBy(od => od.End).ToList();
 
             Assert.AreEqual(16, result.Count);
         }

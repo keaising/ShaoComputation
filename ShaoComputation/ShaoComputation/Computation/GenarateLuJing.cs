@@ -51,7 +51,7 @@ namespace ShaoComputation.Computation
             var lujings = new List<LuJing>();
             var stack = new Stack<Node>();
             var lujingNos = new List<List<int>>();
-            stack.Push(nodes.NumOf(od.start));
+            stack.Push(nodes.NumOf(od.Start));
             while (stack.Count > 0)
             {
                 var neighbor = GetNeighbor(stack, luDuans, nodes);
@@ -59,7 +59,7 @@ namespace ShaoComputation.Computation
                 {
                     nodes.NumOf(stack.Peek().No).NextUsed.Add(neighbor);
                     stack.Push(neighbor);
-                    if (neighbor.No == od.end)
+                    if (neighbor.No == od.End)
                     {
                         var lujing = OutPutLuJing(stack);
                         lujings.Add(lujing);
@@ -130,8 +130,10 @@ namespace ShaoComputation.Computation
         /// </summary>
         public static LuJing OutPutLuJing(Stack<Node> stack)
         {
-            var lujing = new LuJing();
-            lujing.Nodes = new List<Node>();
+            var lujing = new LuJing()
+            {
+                Nodes = new List<Node>()
+            };
             foreach (var item in stack)
             {
                 lujing.Nodes.Add(item);
