@@ -134,6 +134,7 @@ namespace ShaoComputation.Computation
             {
                 Nodes = new List<Node>()
             };
+
             foreach (var item in stack)
             {
                 lujing.Nodes.Add(item);
