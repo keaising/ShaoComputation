@@ -23,7 +23,7 @@ namespace ShaoComputation.Computation
         public static void Run(List<OD> ods, List<LuDuan> luduans, List<Node> nodes)
         {
             ods.initOD();
-            var i = 0;
+            var i = 0.0;
             var finals = new List<double>();
             while (i < Varias.Count)
             {
@@ -56,8 +56,11 @@ namespace ShaoComputation.Computation
                             else
                             {
                                 lujing.Fpc = (1 - 1 / i) * lujing.Fpc;
+                                lujing.Fpb = (1 - 1 / i) * lujing.Fpb;
                             }
                         }
+                        od.Q_rs_c = od.LuJings.Sum(lj => lj.Fpc);
+                        od.Q_rs_b = od.Q_rs - od.Q_rs_c;
                     }
                     else
                     {
@@ -70,11 +73,12 @@ namespace ShaoComputation.Computation
                             else
                             {
                                 lujing.Fpb = (1 - 1 / i) * lujing.Fpb;
+                                lujing.Fpc = (1 - 1 / i) * lujing.Fpc;
                             }
                         }
+                        od.Q_rs_b = od.LuJings.Sum(lj => lj.Fpb);
+                        od.Q_rs_c = od.Q_rs - od.Q_rs_b;
                     }
-                    od.Q_rs_c = od.LuJings.Sum(lj => lj.Fpc);
-                    od.Q_rs_b = od.Q_rs - od.Q_rs_c;
                 }
                 var v1 = new List<double>();
                 var v2 = new List<double>();
