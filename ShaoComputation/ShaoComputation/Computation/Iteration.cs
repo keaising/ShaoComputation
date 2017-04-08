@@ -1,4 +1,5 @@
-﻿using ShaoComputation.Helper;
+﻿using ShaoComputation.Const;
+using ShaoComputation.Helper;
 using ShaoComputation.Model;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ namespace ShaoComputation.Computation
         {
             ods.initOD();
             var i = 0;
-            while (i < 1)
+            while (i < Varias.Count)
             {
                 i++;
                 foreach (var od in ods)
@@ -78,6 +79,7 @@ namespace ShaoComputation.Computation
                 //todo: 待议
                 var final = v1.Sum() / v2.Sum() + v3.Sum() / v4.Sum() + Math.Sqrt(v5.Sum(v => Math.Pow(v, 2))) / ods.Sum(od => od.Q_rs);
             }
+
         }
     }
 }

@@ -67,5 +67,9 @@ namespace ShaoComputation.Const
         public static int F_low { get; set; }
         public static int F_up { get; set; }
         public static double MaxValue { get; set; }
+        /// <summary>
+        /// 迭代次数
+        /// </summary>
+        public static int Count { get; set; }
     }
 }

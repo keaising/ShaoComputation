@@ -240,6 +240,10 @@ namespace ShaoComputation.Helper
                             var value17 = xlRange.Cells[1, j].Value2.ToString();
                             Varias.F_up = Convert.ToInt32(value17);
                             break;
+                        case 18:
+                            var value18 = xlRange.Cells[1, j].Value2.ToString();
+                            Varias.Count = Convert.ToInt32(value18);
+                            break;
                         default:
                             break;
                     }
