@@ -173,75 +173,75 @@ namespace ShaoComputation.Helper
                     switch (j)
                     {
                         case 1:
-                            var value1 = xlRange.Cells[1, j].Value2.ToString();
+                            var value1 = xlRange.Cells[2, j].Value2.ToString();
                             Varias.Mu = Convert.ToInt32(value1);
                             break;
                         case 2:
-                            var value2 = xlRange.Cells[1, j].Value2.ToString();
+                            var value2 = xlRange.Cells[2, j].Value2.ToString();
                             Varias.Alpha_b = Convert.ToDouble(value2);
                             break;
                         case 3:
-                            var value3 = xlRange.Cells[1, j].Value2.ToString();
+                            var value3 = xlRange.Cells[2, j].Value2.ToString();
                             Varias.Alpha_c = Convert.ToDouble(value3);
                             break;
                         case 4:
-                            var value4 = xlRange.Cells[1, j].Value2.ToString();
+                            var value4 = xlRange.Cells[2, j].Value2.ToString();
                             Varias.Beta_b = Convert.ToDouble(value4);
                             break;
                         case 5:
-                            var value5 = xlRange.Cells[1, j].Value2.ToString();
+                            var value5 = xlRange.Cells[2, j].Value2.ToString();
                             Varias.Beta_c = Convert.ToDouble(value5);
                             break;
                         case 6:
-                            var value6 = xlRange.Cells[1, j].Value2.ToString();
+                            var value6 = xlRange.Cells[2, j].Value2.ToString();
                             Varias.Gamma_b = Convert.ToDouble(value6);
                             break;
                         case 7:
-                            var value7 = xlRange.Cells[1, j].Value2.ToString();
+                            var value7 = xlRange.Cells[2, j].Value2.ToString();
                             Varias.Gamma_c = Convert.ToDouble(value7);
                             break;
                         case 8:
-                            var value8 = xlRange.Cells[1, j].Value2.ToString();
+                            var value8 = xlRange.Cells[2, j].Value2.ToString();
                             Varias.Gamma_a = Convert.ToDouble(value8);
                             break;
                         case 9:
-                            var value9 = xlRange.Cells[1, j].Value2.ToString();
+                            var value9 = xlRange.Cells[2, j].Value2.ToString();
                             Varias.Gamma_m = Convert.ToDouble(value9);
                             break;
                         case 10:
-                            var value10 = xlRange.Cells[1, j].Value2.ToString();
+                            var value10 = xlRange.Cells[2, j].Value2.ToString();
                             Varias.Gamma_tc = Convert.ToDouble(value10);
                             break;
                         case 11:
-                            var value11 = xlRange.Cells[1, j].Value2.ToString();
+                            var value11 = xlRange.Cells[2, j].Value2.ToString();
                             Varias.Gamma_tb = Convert.ToDouble(value11);
                             break;
                         case 12:
-                            var value12 = xlRange.Cells[1, j].Value2.ToString();
+                            var value12 = xlRange.Cells[2, j].Value2.ToString();
                             Varias.Bc = Convert.ToDouble(value12);
                             break;
                         case 13:
-                            var value13 = xlRange.Cells[1, j].Value2.ToString();
+                            var value13 = xlRange.Cells[2, j].Value2.ToString();
                             Varias.Bb = Convert.ToInt32(value13);
                             break;
                         case 14:
-                            var value14 = xlRange.Cells[1, j].Value2.ToString();
+                            var value14 = xlRange.Cells[2, j].Value2.ToString();
                             Varias.Money = Convert.ToDouble(value14);
                             break;
                         case 15:
-                            var value15 = xlRange.Cells[1, j].Value2.ToString();
+                            var value15 = xlRange.Cells[2, j].Value2.ToString();
                             Varias.MaxValue = Convert.ToDouble(value15);
                             break;
                         case 16:
-                            var value16 = xlRange.Cells[1, j].Value2.ToString();
+                            var value16 = xlRange.Cells[2, j].Value2.ToString();
                             Varias.F_low = Convert.ToInt32(value16);
                             break;
                         case 17:
-                            var value17 = xlRange.Cells[1, j].Value2.ToString();
+                            var value17 = xlRange.Cells[2, j].Value2.ToString();
                             Varias.F_up = Convert.ToInt32(value17);
                             break;
                         case 18:
-                            var value18 = xlRange.Cells[1, j].Value2.ToString();
+                            var value18 = xlRange.Cells[2, j].Value2.ToString();
                             Varias.Count = Convert.ToInt32(value18);
                             break;
                         default:

@@ -23,6 +23,7 @@ namespace ShaoTest
             var luduans = ReadExcel.LuduanAndPoint(result, fullUri);
             var nodes = ReadExcel.Nodes(fullUri);
             var ods = ReadExcel.OD(fullUri);
+            ReadExcel.Varia(fullUri);
             foreach (var od in ods)
             {
                 od.LuJings = GenarateLuJing.GetAllPath(od, luduans, nodes);

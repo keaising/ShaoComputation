@@ -1,8 +1,14 @@
-﻿using ShaoComputation.Const;
+﻿using Microsoft.Office.Interop.Excel;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using NPOI.SS.UserModel;
+using NPOI.XSSF.UserModel;
+using ShaoComputation.Const;
 using ShaoComputation.Helper;
 using ShaoComputation.Model;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,6 +24,7 @@ namespace ShaoComputation.Computation
         {
             ods.initOD();
             var i = 0;
+
             while (i < Varias.Count)
             {
                 i++;
@@ -79,7 +86,42 @@ namespace ShaoComputation.Computation
                 //todo: 待议
                 var final = v1.Sum() / v2.Sum() + v3.Sum() / v4.Sum() + Math.Sqrt(v5.Sum(v => Math.Pow(v, 2))) / ods.Sum(od => od.Q_rs);
             }
-
+            #region
+            IWorkbook workbook = new XSSFWorkbook();
+            ISheet sheet1 = workbook.CreateSheet("Sheet1");
+            IRow row0 = sheet1.CreateRow(0);
+            row0.CreateCell(0).SetCellValue("OD-Start");
+            row0.CreateCell(1).SetCellValue("OD-End");
+            row0.CreateCell(2).SetCellValue("od.q_rs_c");
+            row0.CreateCell(3).SetCellValue("od.q_rs_b");
+            row0.CreateCell(4).SetCellValue("od.ec_min");
+            row0.CreateCell(5).SetCellValue("od.eb_min");
+            var rowCount = 0;
+            foreach (var od in ods)
+            {
+                rowCount = rowCount + 1;
+                IRow row = sheet1.CreateRow(rowCount);
+                row.CreateCell(0).SetCellValue(od.start);
+                row.CreateCell(1).SetCellValue(od.end);
+                row.CreateCell(2).SetCellValue(od.q_rs_c);
+                row.CreateCell(3).SetCellValue(od.q_rs_b);
+                row.CreateCell(4).SetCellValue(od.ec_min);
+                row.CreateCell(5).SetCellValue(od.eb_min);
+            }
+            var newFile = string.Format(@"D:\Files\1.xlsx");
+            FileStream sw = File.Create(newFile);
+            workbook.Write(sw);
+            sw.Close();
+            #endregion
+            #region
+            //var newfile = string.Format("C:\\Data\\od.json");
+            //using (StreamWriter file = new StreamWriter(newfile, false))
+            //{
+            //    ods = ods.OrderBy(c => c.start).ThenBy(c => c.end).ToList();
+            //    var json = JsonConvert.SerializeObject(ods);
+            //    file.WriteLine(json);
+            //}
+            #endregion
         }
     }
 }
