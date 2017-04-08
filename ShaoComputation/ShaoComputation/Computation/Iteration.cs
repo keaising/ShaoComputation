@@ -20,7 +20,7 @@ namespace ShaoComputation.Computation
     /// </summary>
     public class Iteration
     {
-        public static void Run(List<OD> ods, List<LuDuan> luduans, List<Node> nodes)
+        public static void Run(List<OD> ods, List<LuDuan> luduans, List<Node> nodes, String uri)
         {
             ods.initOD();
             var i = 0.0;
@@ -187,13 +187,13 @@ namespace ShaoComputation.Computation
                 row.CreateCell(1).SetCellValue(final);
             }
 
-            var newFile = string.Format($"D:\\Data\\{DateTime.Now.Day}-{DateTime.Now.Hour}-{DateTime.Now.Minute}-计算结果.xlsx");
+            var newFile = string.Format($"{uri}\\Data\\{DateTime.Now.Day}-{DateTime.Now.Hour}-{DateTime.Now.Minute}-计算结果.xlsx");
             FileStream sw = File.Create(newFile);
             workbook.Write(sw);
             sw.Close();
             #endregion
             #region 导出所有数据到Json
-            var newfile = string.Format($"D:\\Data\\{DateTime.Now.Day}-{DateTime.Now.Hour}-{DateTime.Now.Minute}-od.json");
+            var newfile = string.Format($"{uri}\\Data\\{DateTime.Now.Day}-{DateTime.Now.Hour}-{DateTime.Now.Minute}-od.json");
             using (StreamWriter file = new StreamWriter(newfile, false))
             {
                 ods = ods.OrderBy(c => c.Start).ThenBy(c => c.End).ToList();

@@ -46,7 +46,8 @@ namespace ShaoTest
                     }
                 }
             }
-            Iteration.Run(ods, luduans, nodes);
+            var uri = string.Format($"{Environment.CurrentDirectory}");
+            Iteration.Run(ods, luduans, nodes, uri);
         }
     }
 }
