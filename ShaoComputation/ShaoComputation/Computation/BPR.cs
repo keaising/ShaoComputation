@@ -30,7 +30,7 @@ namespace ShaoComputation.Computation
                 }
                 else
                 {
-                    if ((l.Lambda - l.Yita) == 0)
+                    if (l.N == l.Yita)
                     {
                         l.tc = Varias.MaxValue;
                         l.tb = l.tb0 * (1 + Varias.Alpha_b * (Math.Pow(((l.Xab * Varias.Mu) / (l.Yita * l.C)), Varias.Beta_b)));

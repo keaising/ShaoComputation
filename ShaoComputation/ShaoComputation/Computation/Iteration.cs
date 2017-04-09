@@ -42,16 +42,18 @@ namespace ShaoComputation.Computation
                 }
                 foreach (var od in ods)
                 {
-                    var flag = true;
-                    if (od.Q_rs_c <= od.Q_rs / (1 + Math.Pow(Math.E, (od.Ec_min - od.Eb_min)))) //判断往QRSC还是QRSB加载
+                    var flag1 = true;
+                    var flag2 = true;
+                    if (od.Q_rs_c <= od.Q_rs / (1 + Math.Pow(Math.E, Varias.Theta * (od.Ec_min - od.Eb_min - Varias.Phy)))) //判断往QRSC还是QRSB加载
                     {
                         foreach (var lujing in od.LuJings)
                         {
                             //flag保证在多个最小值的情况下最多只分配一次
-                            if (lujing.ec == od.Ec_min && flag)
+                            if (lujing.ec == od.Ec_min && flag1)
                             {
                                 lujing.Fpc = (1 - 1 / i) * lujing.Fpc + 1 / i * od.Q_rs;
-                                flag = false;
+                                lujing.Fpb = (1 - 1 / i) * lujing.Fpb;
+                                flag1 = false;
                             }
                             else
                             {
@@ -66,9 +68,11 @@ namespace ShaoComputation.Computation
                     {
                         foreach (var lujing in od.LuJings)
                         {
-                            if (lujing.eb == od.Eb_min)
+                            if (lujing.eb == od.Eb_min && flag2)
                             {
                                 lujing.Fpb = (1 - 1 / i) * lujing.Fpb + 1 / i * od.Q_rs;
+                                lujing.Fpc = (1 - 1 / i) * lujing.Fpc;
+                                flag2 = false;
                             }
                             else
                             {
@@ -187,13 +191,13 @@ namespace ShaoComputation.Computation
                 row.CreateCell(1).SetCellValue(final);
             }
 
-            var newFile = string.Format($"{uri}\\Data\\{DateTime.Now.Day}-{DateTime.Now.Hour}-{DateTime.Now.Minute}-计算结果.xlsx");
+            var newFile = string.Format($"{uri}\\Data\\{DateTime.Now.Day}-{DateTime.Now.Hour}-{DateTime.Now.Minute}-{DateTime.Now.Second}-计算结果.xlsx");
             FileStream sw = File.Create(newFile);
             workbook.Write(sw);
             sw.Close();
             #endregion
             #region 导出所有数据到Json
-            var newfile = string.Format($"{uri}\\Data\\{DateTime.Now.Day}-{DateTime.Now.Hour}-{DateTime.Now.Minute}-od.json");
+            var newfile = string.Format($"{uri}\\Data\\{DateTime.Now.Day}-{DateTime.Now.Hour}-{DateTime.Now.Minute}-{DateTime.Now.Second}-od.json");
             using (StreamWriter file = new StreamWriter(newfile, false))
             {
                 ods = ods.OrderBy(c => c.Start).ThenBy(c => c.End).ToList();

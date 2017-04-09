@@ -71,5 +71,13 @@ namespace ShaoComputation.Const
         /// 迭代次数
         /// </summary>
         public static int Count { get; set; }
+        /// <summary>
+        /// 费用变量
+        /// </summary>
+        public static double Theta { get; set; }
+        /// <summary>
+        /// 用户随机变量
+        /// </summary>
+        public static double Phy { get; set; }
     }
 }

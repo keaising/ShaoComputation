@@ -244,6 +244,14 @@ namespace ShaoComputation.Helper
                             var value18 = xlRange.Cells[2, j].Value2.ToString();
                             Varias.Count = Convert.ToInt32(value18);
                             break;
+                        case 19:
+                            var value19 = xlRange.Cells[2, j].Value2.ToString();
+                            Varias.Theta = Convert.ToDouble(value19);
+                            break;
+                        case 20:
+                            var value20 = xlRange.Cells[2, j].Value2.ToString();
+                            Varias.Phy = Convert.ToDouble(value20);
+                            break;
                         default:
                             break;
                     }
