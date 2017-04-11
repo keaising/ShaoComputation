@@ -79,5 +79,29 @@ namespace ShaoComputation.Const
         /// 用户随机变量
         /// </summary>
         public static double Phy { get; set; }
+        /// <summary>
+        /// 是否处于遗传算法迭代
+        /// </summary>
+        public static bool IsGA = false;
+        /// <summary>
+        /// 种群数量
+        /// </summary>
+        public static int M { get; set; }
+        /// <summary>
+        /// 交叉概率
+        /// </summary>
+        public static double Pc { get; set; }
+        /// <summary>
+        /// 变异概率
+        /// </summary>
+        public static double Pm { get; set; }
+        /// <summary>
+        /// 迭代次数
+        /// </summary>
+        public static int T { get; set; }
+        /// <summary>
+        /// 最大迭代次数
+        /// </summary>
+        public static int Tmax { get; set; }
     }
 }

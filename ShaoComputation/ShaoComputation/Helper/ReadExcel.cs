@@ -252,6 +252,26 @@ namespace ShaoComputation.Helper
                             var value20 = xlRange.Cells[2, j].Value2.ToString();
                             Varias.Phy = Convert.ToDouble(value20);
                             break;
+                        case 21:
+                            var value21 = xlRange.Cells[2, j].Value2.ToString();
+                            Varias.M = Convert.ToInt32(value21);
+                            break;
+                        case 22:
+                            var value22 = xlRange.Cells[2, j].Value2.ToString();
+                            Varias.Pc = Convert.ToDouble(value22);
+                            break;
+                        case 23:
+                            var value23 = xlRange.Cells[2, j].Value2.ToString();
+                            Varias.Pm = Convert.ToDouble(value23);
+                            break;
+                        case 24:
+                            var value24 = xlRange.Cells[2, j].Value2.ToString();
+                            Varias.T = Convert.ToInt32(value24);
+                            break;
+                        case 25:
+                            var value25 = xlRange.Cells[2, j].Value2.ToString();
+                            Varias.Tmax = Convert.ToInt32(value25);
+                            break;
                         default:
                             break;
                     }
