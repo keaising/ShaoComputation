@@ -53,6 +53,7 @@ namespace ShaoTest
 
         public void GroupRun()
         {
+            #region 读入数据
             var fullUri = string.Format($"{Environment.CurrentDirectory}\\OD.xlsx");
             var result = ReadExcel.LuDuan(fullUri);
             result = result.OrderBy(l => l.No).ToList();
@@ -83,8 +84,8 @@ namespace ShaoTest
                 }
             }
             var uri = string.Format($"{Environment.CurrentDirectory}");
-
-            //产生种群
+            #endregion
+            #region 产生种群
             var groups = new List<Group>();
             for (int i = 0; i < Varias.M; i++)
             {
@@ -103,20 +104,17 @@ namespace ShaoTest
                 }
                 groups.Add(group);
             }
-            //循环
+            #endregion
+            #region 循环
             for (int i = 0; i < Varias.T; i++)
             {
                 foreach (var group in groups)
                 {
                     group.Result = Iteration.Run(group.Ods, group.Luduans, nodes, uri);
                 }
-                var MaxResult = groups.Max(g => g.Result);
-                foreach (var group in groups)
-                {
-                    group.Fitness = MaxResult - group.Result;
-                }
-                var SumFitness = groups.Sum(g => g.Fitness);
+                var chosenGroup = Randam.Roulette(groups);
             }
+            #endregion
         }
     }
 }
