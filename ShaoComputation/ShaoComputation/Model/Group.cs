@@ -8,6 +8,7 @@ namespace ShaoComputation.Model
 {
     public class Group
     {
+        public int No { get; set; }
         public List<int> Fs
         {
             get

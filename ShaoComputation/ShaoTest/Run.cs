@@ -87,6 +87,7 @@ namespace ShaoTest
             #endregion
             #region 产生种群
             var groups = new List<Group>();
+            Varias.GroupNo = 0;
             for (int i = 0; i < Varias.M; i++)
             {
                 var lds = new LuDuan[luduans.Count];
@@ -95,6 +96,7 @@ namespace ShaoTest
                 ods.CopyTo(ODs);
                 var group = new Group
                 {
+                    No = Varias.GroupNo,
                     Luduans = lds.ToList(),
                     Ods = ODs.ToList()
                 };
@@ -103,6 +105,7 @@ namespace ShaoTest
                     ld.F = Randam.F;
                 }
                 groups.Add(group);
+                Varias.GroupNo += 1;
             }
             #endregion
             #region 循环

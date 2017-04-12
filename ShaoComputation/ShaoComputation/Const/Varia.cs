@@ -103,5 +103,9 @@ namespace ShaoComputation.Const
         /// 最大迭代次数
         /// </summary>
         public static int Tmax { get; set; }
+        /// <summary>
+        /// 种群编号
+        /// </summary>
+        public static int GroupNo { get; set; }
     }
 }
