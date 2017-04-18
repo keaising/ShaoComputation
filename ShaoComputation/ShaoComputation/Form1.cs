@@ -1,4 +1,6 @@
-﻿using ShaoComputation.Computation;
+﻿using NPOI.SS.UserModel;
+using NPOI.XSSF.UserModel;
+using ShaoComputation.Computation;
 using ShaoComputation.Const;
 using ShaoComputation.Helper;
 using ShaoComputation.Model;
@@ -8,6 +10,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -113,12 +116,13 @@ namespace ShaoComputation
             }
             #endregion
             #region 循环
+            Varias.IsGA = true;
             foreach (var group in groups)
             {
-                Varias.IsGA = true;
                 group.Result = Iteration.Run(group.Ods, group.Luduans, ReadExcel.Nodes(fullUri), uri);
             }
-            var mins = new List<double>();
+            var minResults = new List<double>();
+            var minFs = new List<List<int>>();
             for (int i = 0; i < Varias.T; i++)
             {
                 var chosenGroup = Randam.Roulette(groups);
@@ -131,8 +135,32 @@ namespace ShaoComputation
                 var maxGroup = groups.OrderBy(g => g.Result).Take(Varias.M - (int)Math.Round(Varias.M * Varias.Pc)).ToList();
                 children.AddRange(maxGroup);
                 children = GeneticAlgorithm.CalculateFitness(groups);
-                mins.Add(children.Min(c => c.Result));
+                var minResult = children.Min(c => c.Result);
+                minResults.Add(minResult);
+                minFs.Add(children.FirstOrDefault(g => g.Result == minResult).Fs);
             }
+            #endregion
+            #region 输出到Excel
+            IWorkbook workbook = new XSSFWorkbook();
+            ISheet sheet1 = workbook.CreateSheet("ResultFs");
+            IRow row0 = sheet1.CreateRow(0);
+            row0.CreateCell(0).SetCellValue("Result");
+            row0.CreateCell(1).SetCellValue("Fs");
+            var rowCount = 0;
+            foreach (var Fs in minFs)
+            {
+                rowCount = rowCount + 1;
+                IRow row = sheet1.CreateRow(rowCount);
+                row.CreateCell(0).SetCellValue(minResults[rowCount - 1]);
+                for (int i = 0; i < Fs.Count; i++)
+                {
+                    row.CreateCell(i + 1).SetCellValue(Fs[i]);
+                }
+            }
+            var newFile = string.Format($"{uri}\\Data\\{DateTime.Now.Day}-{DateTime.Now.Hour}-{DateTime.Now.Minute}-{DateTime.Now.Second}-遗传算法结果.xlsx");
+            FileStream sw = File.Create(newFile);
+            workbook.Write(sw);
+            sw.Close();
             #endregion
         }
     }
