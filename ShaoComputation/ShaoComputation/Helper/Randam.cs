@@ -29,10 +29,14 @@ namespace ShaoComputation.Helper
         /// </summary>
         public static List<Group> Roulette(List<Group> groups)
         {
-            var MaxResult = groups.Max(g => g.Result);
+            //保留所有代中最大的目标值
+            if (Varias.MaxResult < groups.Max(g => g.Result))
+            {
+                Varias.MaxResult = groups.Max(g => g.Result);
+            }
             foreach (var group in groups)
             {
-                group.Fitness = MaxResult - group.Result;
+                group.Fitness = Varias.MaxResult - group.Result;
             }
             var SumFitness = groups.Sum(g => g.Fitness);
             var seed = new Random();

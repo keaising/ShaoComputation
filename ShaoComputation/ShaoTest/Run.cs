@@ -109,13 +109,21 @@ namespace ShaoTest
             }
             #endregion
             #region 循环
+            foreach (var group in groups)
+            {
+                group.Result = Iteration.Run(group.Ods, group.Luduans, nodes, uri);
+            }
+            var mins = new List<double>();
             for (int i = 0; i < Varias.T; i++)
             {
-                foreach (var group in groups)
-                {
-                    group.Result = Iteration.Run(group.Ods, group.Luduans, nodes, uri);
-                }
                 var chosenGroup = Randam.Roulette(groups);
+                var ODs = new OD[ods.Count];
+                ods.CopyTo(ODs);
+                var children = GeneticAlgorithm.Children(groups, ODs.ToList());
+                children = GeneticAlgorithm.CalculateResult(groups);
+                var maxGroup = groups.OrderBy(g => g.Result).Take(Varias.M - (int)Math.Round(Varias.M * Varias.Pc)).ToList();
+                children.AddRange(maxGroup);
+                mins.Add(children.Min(c => c.Result));
             }
             #endregion
         }

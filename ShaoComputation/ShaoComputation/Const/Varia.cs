@@ -107,5 +107,9 @@ namespace ShaoComputation.Const
         /// 种群编号
         /// </summary>
         public static int GroupNo { get; set; }
+        /// <summary>
+        /// 最大适应度
+        /// </summary>
+        public static double MaxResult { get; set; }
     }
 }
