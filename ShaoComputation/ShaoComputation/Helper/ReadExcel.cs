@@ -338,7 +338,7 @@ namespace ShaoComputation.Helper
             int colCount = xlRange.Columns.Count;
 
             var nodes = new List<Node>();
-            for (int i = 1; i < 17; i++)
+            for (int i = 1; i < rowCount; i++)
             {
                 nodes.Add(new Node
                 {

@@ -82,7 +82,7 @@ namespace ShaoComputation.Computation
         /// </summary>
         /// <param name="groups"></param>
         /// <returns></returns>
-        public static List<Group> CalculateResult(List<Group> groups)
+        public static List<Group> CalculateFitness(List<Group> groups)
         {
             //保留所有代中最大的目标值
             if (Varias.MaxResult < groups.Max(g => g.Result))

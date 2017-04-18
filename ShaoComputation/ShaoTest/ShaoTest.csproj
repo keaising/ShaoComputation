@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GenarateLuJingTest.cs" />
+    <Compile Include="Person.cs" />
     <Compile Include="ReadExcelTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Run.cs" />

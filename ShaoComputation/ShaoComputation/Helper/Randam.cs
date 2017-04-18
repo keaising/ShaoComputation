@@ -13,6 +13,7 @@ namespace ShaoComputation.Helper
     /// </summary>
     public class Randam
     {
+        private static readonly Random instance = new Random();
         /// <summary>
         /// 随机生成公交发车频率
         /// </summary>
@@ -20,8 +21,8 @@ namespace ShaoComputation.Helper
         {
             get
             {
-                Random rnd = new Random();
-                return rnd.Next(Varias.F_low, Varias.F_up);
+                int n = instance.Next(Varias.F_low, Varias.F_up);
+                return n;
             }
         }
         /// <summary>

@@ -51,54 +51,49 @@ namespace ShaoTest
             Iteration.Run(ods, luduans, nodes, uri);
         }
 
+        [TestMethod]
         public void GroupRun()
         {
-            #region 读入数据
+            var uri = string.Format($"{Environment.CurrentDirectory}");
             var fullUri = string.Format($"{Environment.CurrentDirectory}\\OD.xlsx");
-            var result = ReadExcel.LuDuan(fullUri);
-            result = result.OrderBy(l => l.No).ToList();
-            var luduans = ReadExcel.LuduanAndPoint(result, fullUri);
-            var nodes = ReadExcel.Nodes(fullUri);
-            var ods = ReadExcel.OD(fullUri);
+            var groups = new List<Group>();
+            Varias.GroupNo = 0;
             ReadExcel.Varia(fullUri);
-            foreach (var od in ods)
+            #region 产生种群
+            for (int i = 0; i < Varias.M; i++)
             {
-                od.LuJings = GenarateLuJing.GetAllPath(od, luduans, nodes);
-                foreach (var lujing in od.LuJings) //添加路段所在路径信息
+                var result = ReadExcel.LuDuan(fullUri);
+                result = result.OrderBy(l => l.No).ToList();
+                var luduans = ReadExcel.LuduanAndPoint(result, fullUri);
+                var nodes = ReadExcel.Nodes(fullUri);
+                var ods = ReadExcel.OD(fullUri);
+                foreach (var od in ods)
                 {
-                    foreach (var luduan in lujing.LuDuans)
+                    od.LuJings = GenarateLuJing.GetAllPath(od, luduans, nodes);
+                    foreach (var lujing in od.LuJings) //添加路段所在路径信息
                     {
-                        if (luduan.No != 0)
+                        foreach (var luduan in lujing.LuDuans)
                         {
-                            if (luduans.NumOf(luduan.No).At == null)
+                            if (luduan.No != 0)
                             {
-                                luduans.NumOf(luduan.No).At = new List<LuJing>();
-                            }
+                                if (luduans.NumOf(luduan.No).At == null)
+                                {
+                                    luduans.NumOf(luduan.No).At = new List<LuJing>();
+                                }
 
-                            if (!luduans.NumOf(luduan.No).At.Any(l => l.start.No == lujing.Nodes.First().No && l.end.No == lujing.Nodes.Last().No))
-                            {
-                                luduans.NumOf(luduan.No).At.Add(lujing);
+                                if (!luduans.NumOf(luduan.No).At.Any(l => l.start.No == lujing.Nodes.First().No && l.end.No == lujing.Nodes.Last().No))
+                                {
+                                    luduans.NumOf(luduan.No).At.Add(lujing);
+                                }
                             }
                         }
                     }
                 }
-            }
-            var uri = string.Format($"{Environment.CurrentDirectory}");
-            #endregion
-            #region 产生种群
-            var groups = new List<Group>();
-            Varias.GroupNo = 0;
-            for (int i = 0; i < Varias.M; i++)
-            {
-                var lds = new LuDuan[luduans.Count];
-                luduans.CopyTo(lds);
-                var ODs = new OD[ods.Count];
-                ods.CopyTo(ODs);
                 var group = new Group
                 {
                     No = Varias.GroupNo,
-                    Luduans = lds.ToList(),
-                    Ods = ODs.ToList()
+                    Luduans = luduans,
+                    Ods = ods
                 };
                 foreach (var ld in group.Luduans)
                 {
@@ -111,18 +106,22 @@ namespace ShaoTest
             #region 循环
             foreach (var group in groups)
             {
-                group.Result = Iteration.Run(group.Ods, group.Luduans, nodes, uri);
+                Varias.IsGA = true;
+                group.Result = Iteration.Run(group.Ods, group.Luduans, ReadExcel.Nodes(fullUri), uri);
             }
             var mins = new List<double>();
             for (int i = 0; i < Varias.T; i++)
             {
                 var chosenGroup = Randam.Roulette(groups);
-                var ODs = new OD[ods.Count];
-                ods.CopyTo(ODs);
-                var children = GeneticAlgorithm.Children(groups, ODs.ToList());
-                children = GeneticAlgorithm.CalculateResult(groups);
+                var ODs = ReadExcel.OD(fullUri);
+                var children = GeneticAlgorithm.Children(groups, ODs);
+                foreach (var child in children)
+                {
+                    child.Result = Iteration.Run(child.Ods, child.Luduans, ReadExcel.Nodes(fullUri), uri);
+                }
                 var maxGroup = groups.OrderBy(g => g.Result).Take(Varias.M - (int)Math.Round(Varias.M * Varias.Pc)).ToList();
                 children.AddRange(maxGroup);
+                children = GeneticAlgorithm.CalculateFitness(groups);
                 mins.Add(children.Min(c => c.Result));
             }
             #endregion
