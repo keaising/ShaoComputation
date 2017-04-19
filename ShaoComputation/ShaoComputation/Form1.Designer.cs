@@ -30,11 +30,12 @@
         {
             this.Begin = new System.Windows.Forms.Button();
             this.GA_Button = new System.Windows.Forms.Button();
+            this.messageBox = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // Begin
             // 
-            this.Begin.Location = new System.Drawing.Point(61, 88);
+            this.Begin.Location = new System.Drawing.Point(54, 29);
             this.Begin.Name = "Begin";
             this.Begin.Size = new System.Drawing.Size(75, 23);
             this.Begin.TabIndex = 0;
@@ -44,7 +45,7 @@
             // 
             // GA_Button
             // 
-            this.GA_Button.Location = new System.Drawing.Point(235, 88);
+            this.GA_Button.Location = new System.Drawing.Point(230, 29);
             this.GA_Button.Name = "GA_Button";
             this.GA_Button.Size = new System.Drawing.Size(75, 23);
             this.GA_Button.TabIndex = 1;
@@ -52,16 +53,26 @@
             this.GA_Button.UseVisualStyleBackColor = true;
             this.GA_Button.Click += new System.EventHandler(this.GA_Button_Click);
             // 
+            // messageBox
+            // 
+            this.messageBox.Location = new System.Drawing.Point(54, 87);
+            this.messageBox.Multiline = true;
+            this.messageBox.Name = "messageBox";
+            this.messageBox.Size = new System.Drawing.Size(251, 129);
+            this.messageBox.TabIndex = 2;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(393, 260);
+            this.Controls.Add(this.messageBox);
             this.Controls.Add(this.GA_Button);
             this.Controls.Add(this.Begin);
             this.Name = "Form1";
             this.Text = "Form1";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -69,6 +80,7 @@
 
         private System.Windows.Forms.Button Begin;
         private System.Windows.Forms.Button GA_Button;
+        private System.Windows.Forms.TextBox messageBox;
     }
 }
 

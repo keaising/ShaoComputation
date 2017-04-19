@@ -66,6 +66,8 @@ namespace ShaoComputation
 
         private void GA_Button_Click(object sender, EventArgs e)
         {
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
             var uri = string.Format($"{Environment.CurrentDirectory}");
             var fullUri = string.Format($"{Environment.CurrentDirectory}\\OD.xlsx");
             var groups = new List<Group>();
@@ -115,14 +117,20 @@ namespace ShaoComputation
                 Varias.GroupNo += 1;
             }
             #endregion
+            sw.Stop();
+            messageBox.Text += string.Format(($"数据读取完成，耗时{sw.ElapsedMilliseconds / 1000}秒，开始数据初始化"));
             #region 循环
+            sw.Restart();
             Varias.IsGA = true;
             foreach (var group in groups)
             {
                 group.Result = Iteration.Run(group.Ods, group.Luduans, ReadExcel.Nodes(fullUri), uri);
             }
+            sw.Stop();
+            messageBox.Text += string.Format(($"数据初始化完成，{groups.Count}个种群共耗时{sw.ElapsedMilliseconds / 1000}秒，开始遗传算法迭代"));
             var minResults = new List<double>();
             var minFs = new List<List<int>>();
+            sw.Restart();
             for (int i = 0; i < Varias.T; i++)
             {
                 var chosenGroup = Randam.Roulette(groups);
@@ -147,6 +155,8 @@ namespace ShaoComputation
                 minResults.Add(minResult);
                 minFs.Add(children.FirstOrDefault(g => g.Result == minResult).Fs);
             }
+            sw.Stop();
+            messageBox.Text += string.Format(($"遗传算法完成，{Varias.T}次迭代共耗时{sw.ElapsedMilliseconds / 1000}秒"));
             #endregion
             #region 输出到Excel
             IWorkbook workbook = new XSSFWorkbook();
@@ -166,9 +176,9 @@ namespace ShaoComputation
                 }
             }
             var newFile = string.Format($"{uri}\\Data\\{DateTime.Now.Day}-{DateTime.Now.Hour}-{DateTime.Now.Minute}-{DateTime.Now.Second}-遗传算法结果.xlsx");
-            FileStream sw = File.Create(newFile);
-            workbook.Write(sw);
-            sw.Close();
+            FileStream sw1 = File.Create(newFile);
+            workbook.Write(sw1);
+            sw1.Close();
             #endregion
         }
     }
