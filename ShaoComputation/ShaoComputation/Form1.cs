@@ -128,10 +128,18 @@ namespace ShaoComputation
                 var chosenGroup = Randam.Roulette(groups);
                 var ODs = ReadExcel.OD(fullUri);
                 var children = GeneticAlgorithm.Children(groups, ODs);
-                foreach (var child in children)
+                #region 原有串行代码
+                //foreach (var child in children)
+                //{
+                //    child.Result = Iteration.Run(child.Ods, child.Luduans, ReadExcel.Nodes(fullUri), uri);
+                //}
+                #endregion
+                #region 并行
+                Parallel.ForEach<Group>(children, child => 
                 {
                     child.Result = Iteration.Run(child.Ods, child.Luduans, ReadExcel.Nodes(fullUri), uri);
-                }
+                });
+                #endregion
                 var maxGroup = groups.OrderBy(g => g.Result).Take(Varias.M - (int)Math.Round(Varias.M * Varias.Pc)).ToList();
                 children.AddRange(maxGroup);
                 children = GeneticAlgorithm.CalculateFitness(groups);
