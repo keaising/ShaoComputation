@@ -132,6 +132,11 @@ namespace ShaoComputation.Computation
                 row0.CreateCell(3).SetCellValue("q_rs_b");
                 row0.CreateCell(4).SetCellValue("ec_min");
                 row0.CreateCell(5).SetCellValue("eb_min");
+                row0.CreateCell(6).SetCellValue("value1");
+                row0.CreateCell(7).SetCellValue("value2");
+                row0.CreateCell(8).SetCellValue("value3");
+                row0.CreateCell(9).SetCellValue("value4");
+
                 var rowCount = 0;
                 foreach (var od in ods)
                 {
@@ -143,6 +148,17 @@ namespace ShaoComputation.Computation
                     row.CreateCell(3).SetCellValue(od.Q_rs_b);
                     row.CreateCell(4).SetCellValue(od.Ec_min);
                     row.CreateCell(5).SetCellValue(od.Eb_min);
+                    if (rowCount == 1)
+                    {
+                        var value1 = ods.Sum(o => o.Q_rs_c) / (ods.Sum(o => o.Q_rs));
+                        var value2 = ods.Sum(o => o.Ec_min * o.Q_rs_c) / ods.Sum(o => o.Q_rs_c);
+                        var value3 = ods.Sum(o => o.Eb_min * o.Q_rs_b) / ods.Sum(o => o.Q_rs_b);
+                        var value4 = (ods.Sum(o => o.Ec_min * o.Q_rs_c) + ods.Sum(o => o.Eb_min * o.Q_rs_b)) / (ods.Sum(o => o.Q_rs));
+                        row.CreateCell(6).SetCellValue(value1);
+                        row.CreateCell(7).SetCellValue(value2);
+                        row.CreateCell(8).SetCellValue(value3);
+                        row.CreateCell(9).SetCellValue(value4);
+                    }
                 }
                 //LuDuan
                 ISheet sheet2 = workbook.CreateSheet("路段信息");
