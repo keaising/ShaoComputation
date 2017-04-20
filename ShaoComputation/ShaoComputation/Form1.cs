@@ -80,10 +80,19 @@ namespace ShaoComputation
 
         private void GA_Button_Click(object sender, EventArgs e)
         {
+            messageBox.Text = string.Empty;
             Stopwatch sw = new Stopwatch();
             sw.Start();
             var uri = string.Format($"{Environment.CurrentDirectory}");
-            var fullUri = string.Format($"{Environment.CurrentDirectory}\\OD.xlsx");
+            var fullUri = string.Empty;
+            if (string.IsNullOrWhiteSpace(PathBox.Text))
+            {
+                fullUri = string.Format($"{Environment.CurrentDirectory}\\Data\\OD.xlsx");
+            }
+            else
+            {
+                fullUri = PathBox.Text;
+            }
             var groups = new List<Group>();
             Varias.GroupNo = 0;
             ReadExcel.Varia(fullUri);
@@ -92,6 +101,9 @@ namespace ShaoComputation
             var result = ReadExcel.LuDuan(fullUri);
             result = result.OrderBy(l => l.No).ToList();
             var luduansOrigin = ReadExcel.LuduanAndPoint(result, fullUri);
+            messageBox.Text += string.Format($"数据读入成功！\r\n{nameof(nodesOrigin)}：{nodesOrigin.Count}\r\n");
+            messageBox.Text += string.Format($"{nameof(odsOrigin)}：{odsOrigin.Count}\r\n");
+            messageBox.Text += string.Format($"{nameof(luduansOrigin)}：{luduansOrigin.Count}\r\n");
             #region 产生种群
             for (int i = 0; i < Varias.M; i++)
             {
@@ -133,9 +145,10 @@ namespace ShaoComputation
                 groups.Add(group);
                 Varias.GroupNo += 1;
             }
+            messageBox.Text += string.Format($"产生种群：{groups.Count}\r\n");
             #endregion
             sw.Stop();
-            messageBox.Text += string.Format(($"数据读取完成，耗时{sw.ElapsedMilliseconds / 1000}秒，开始数据初始化"));
+            messageBox.Text += string.Format(($"数据读取完成，耗时{sw.ElapsedMilliseconds / 1000}秒，开始数据初始化\r\n"));
             #region 循环
             sw.Restart();
             Varias.IsGA = true;
@@ -144,7 +157,7 @@ namespace ShaoComputation
                 group.Result = Iteration.Run(group.Ods, group.Luduans, ReadExcel.Nodes(fullUri), uri);
             }
             sw.Stop();
-            messageBox.Text += string.Format(($"数据初始化完成，{groups.Count}个种群共耗时{sw.ElapsedMilliseconds / 1000}秒，开始遗传算法迭代"));
+            messageBox.Text += string.Format(($"数据初始化完成，{groups.Count}个种群共耗时{sw.ElapsedMilliseconds / 1000}秒，开始遗传算法迭代\r\n"));
             var minResults = new List<double>();
             var minFs = new List<List<int>>();
             sw.Restart();
@@ -159,7 +172,7 @@ namespace ShaoComputation
                 //}
                 #endregion
                 #region 并行
-                Parallel.ForEach<Group>(children, child => 
+                Parallel.ForEach<Group>(children, child =>
                 {
                     child.Result = Iteration.Run(child.Ods, child.Luduans, ReadExcel.Nodes(fullUri), uri);
                 });
@@ -170,6 +183,7 @@ namespace ShaoComputation
                 var minResult = children.Min(c => c.Result);
                 minResults.Add(minResult);
                 minFs.Add(children.FirstOrDefault(g => g.Result == minResult).Fs);
+                messageBox.Text += string.Format(($"第{i + 1}次迭代完成\r\n"));
             }
             sw.Stop();
             messageBox.Text += string.Format(($"遗传算法完成，{Varias.T}次迭代共耗时{sw.ElapsedMilliseconds / 1000}秒"));
