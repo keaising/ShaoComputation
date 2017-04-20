@@ -62,6 +62,7 @@
             this.messageBox.Location = new System.Drawing.Point(124, 132);
             this.messageBox.Multiline = true;
             this.messageBox.Name = "messageBox";
+            this.messageBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.messageBox.Size = new System.Drawing.Size(334, 151);
             this.messageBox.TabIndex = 2;
             // 

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace ShaoComputation.Model
 {
+    [Serializable]
     public class OD
     {
         public int No { get; set; }
@@ -30,7 +31,7 @@ namespace ShaoComputation.Model
         public double Eb_min
         {
             get
-            { 
+            {
                 return LuJings.Min(l => l.eb);
             }
         }

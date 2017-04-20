@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace ShaoComputation.Model
 {
+    [Serializable]
     public class Group
     {
         public int No { get; set; }

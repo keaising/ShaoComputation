@@ -7,6 +7,7 @@ using ShaoComputation.Const;
 
 namespace ShaoComputation.Model
 {
+    [Serializable]
     public class LuDuan
     {
         public int No { get; set; }
