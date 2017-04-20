@@ -50,7 +50,12 @@ namespace ShaoComputation.Helper
                     }
                     else
                     {
-                        if (l.N == l.Yita)
+                        if (l.Yita == 0)
+                        {
+                            l.ltc = l.tc0;
+                            l.ltb = Varias.MaxValue;
+                        }
+                        else if (l.N == l.Yita)
                         {
                             l.ltc = Varias.MaxValue;
                             l.ltb = l.tb0;
