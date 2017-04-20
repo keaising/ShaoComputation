@@ -93,6 +93,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helper\CopyHelper.cs" />
     <Compile Include="Helper\LuduanHelper.cs" />
     <Compile Include="Helper\NodeHelper.cs" />
     <Compile Include="Helper\Randam.cs" />

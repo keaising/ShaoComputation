@@ -51,6 +51,9 @@ namespace ShaoTest
             Iteration.Run(ods, luduans, nodes, uri);
         }
 
+        /// <summary>
+        /// 单元测试有误，以Form1为准
+        /// </summary>
         [TestMethod]
         public void GroupRun()
         {
@@ -59,14 +62,14 @@ namespace ShaoTest
             var groups = new List<Group>();
             Varias.GroupNo = 0;
             ReadExcel.Varia(fullUri);
+            var result = ReadExcel.LuDuan(fullUri);
+            result = result.OrderBy(l => l.No).ToList();
+            var luduans = ReadExcel.LuduanAndPoint(result, fullUri);
+            var nodes = ReadExcel.Nodes(fullUri);
+            var ods = ReadExcel.OD(fullUri);
             #region 产生种群
             for (int i = 0; i < Varias.M; i++)
             {
-                var result = ReadExcel.LuDuan(fullUri);
-                result = result.OrderBy(l => l.No).ToList();
-                var luduans = ReadExcel.LuduanAndPoint(result, fullUri);
-                var nodes = ReadExcel.Nodes(fullUri);
-                var ods = ReadExcel.OD(fullUri);
                 foreach (var od in ods)
                 {
                     od.LuJings = GenarateLuJing.GetAllPath(od, luduans, nodes);
@@ -114,7 +117,7 @@ namespace ShaoTest
             {
                 var chosenGroup = Randam.Roulette(groups);
                 var ODs = ReadExcel.OD(fullUri);
-                var children = GeneticAlgorithm.Children(groups, ODs);
+                var children = GeneticAlgorithm.Children(groups, ODs, luduans, nodes);
                 foreach (var child in children)
                 {
                     child.Result = Iteration.Run(child.Ods, child.Luduans, ReadExcel.Nodes(fullUri), uri);

@@ -87,14 +87,17 @@ namespace ShaoComputation
             var groups = new List<Group>();
             Varias.GroupNo = 0;
             ReadExcel.Varia(fullUri);
+            var nodesOrigin = ReadExcel.Nodes(fullUri);
+            var odsOrigin = ReadExcel.OD(fullUri);
+            var result = ReadExcel.LuDuan(fullUri);
+            result = result.OrderBy(l => l.No).ToList();
+            var luduansOrigin = ReadExcel.LuduanAndPoint(result, fullUri);
             #region 产生种群
             for (int i = 0; i < Varias.M; i++)
             {
-                var result = ReadExcel.LuDuan(fullUri);
-                result = result.OrderBy(l => l.No).ToList();
-                var luduans = ReadExcel.LuduanAndPoint(result, fullUri);
-                var nodes = ReadExcel.Nodes(fullUri);
-                var ods = ReadExcel.OD(fullUri);
+                var luduans = CopyHelper.DeepClone(luduansOrigin);
+                var ods = CopyHelper.DeepClone(odsOrigin);
+                var nodes = CopyHelper.DeepClone(nodesOrigin);
                 foreach (var od in ods)
                 {
                     od.LuJings = GenarateLuJing.GetAllPath(od, luduans, nodes);
@@ -148,8 +151,7 @@ namespace ShaoComputation
             for (int i = 0; i < Varias.T; i++)
             {
                 var chosenGroup = Randam.Roulette(groups);
-                var ODs = ReadExcel.OD(fullUri);
-                var children = GeneticAlgorithm.Children(groups, ODs);
+                var children = GeneticAlgorithm.Children(groups, odsOrigin, luduansOrigin, nodesOrigin);
                 #region 原有串行代码
                 //foreach (var child in children)
                 //{

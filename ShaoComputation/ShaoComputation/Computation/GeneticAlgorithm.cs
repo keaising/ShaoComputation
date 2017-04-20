@@ -11,7 +11,7 @@ namespace ShaoComputation.Computation
 {
     public class GeneticAlgorithm
     {
-        public static List<Group> Children(List<Group> groups, List<OD> originOD)
+        public static List<Group> Children(List<Group> groups, List<OD> ODsOrigin, List<LuDuan> luduansOrigin, List<Node> nodesOrigin)
         {
             var seed = new Random();
             var children = new List<Group>();
@@ -27,7 +27,7 @@ namespace ShaoComputation.Computation
                     mother = groups[id2];
                     if (groups[id2].No != father.No) break;
                 }
-                children.Add(CreateChild(father, mother, originOD));
+                children.Add(CreateChild(father, mother, ODsOrigin, luduansOrigin, nodesOrigin));
             }
             children = Variation(children);
             return children;
@@ -40,22 +40,54 @@ namespace ShaoComputation.Computation
         /// <param name="mother"></param>
         /// <param name="originOD"></param>
         /// <returns></returns>
-        static Group CreateChild(Group father, Group mother, List<OD> originOD)
+        static Group CreateChild(Group father, Group mother, List<OD> ODsOrigin, List<LuDuan> luduansOrigin, List<Node> nodesOrigin)
         {
-            var ods = new OD[originOD.Count];
-            originOD.CopyTo(ods);
+            var ods = CopyHelper.DeepClone(ODsOrigin);
+            var luduans = CopyHelper.DeepClone(luduansOrigin);
+            var nodes = CopyHelper.DeepClone(nodesOrigin);
             var child = new Group()
             {
                 No = Varias.GroupNo,
                 Luduans = new List<LuDuan>(),
-                Ods = ods.ToList()
+                Ods = ods
             };
             Varias.GroupNo += 1;
             //交叉
             var seed = new Random();
             var point = seed.Next(0, father.Luduans.Count);
-            child.Luduans.AddRange(father.Luduans.Take(point));
-            child.Luduans.AddRange(mother.Luduans.Skip(point));
+            child.Luduans = luduans;
+            var fatherLd = father.Luduans.Take(point);
+            var motherLd = mother.Luduans.Skip(point);
+            foreach (var fld in fatherLd)
+            {
+                child.Luduans.NumOf(fld.No).F = fld.F;
+            }
+            foreach (var mld in motherLd)
+            {
+                child.Luduans.NumOf(mld.No).F = mld.F;
+            }
+            foreach (var od in ods)
+            {
+                od.LuJings = GenarateLuJing.GetAllPath(od, luduans, nodes);
+                foreach (var lujing in od.LuJings) //添加路段所在路径信息
+                {
+                    foreach (var luduan in lujing.LuDuans)
+                    {
+                        if (luduan.No != 0)
+                        {
+                            if (luduans.NumOf(luduan.No).At == null)
+                            {
+                                luduans.NumOf(luduan.No).At = new List<LuJing>();
+                            }
+
+                            if (!luduans.NumOf(luduan.No).At.Any(l => l.start.No == lujing.Nodes.First().No && l.end.No == lujing.Nodes.Last().No))
+                            {
+                                luduans.NumOf(luduan.No).At.Add(lujing);
+                            }
+                        }
+                    }
+                }
+            }
             return child;
         }
 
