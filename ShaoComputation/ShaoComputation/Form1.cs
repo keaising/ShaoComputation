@@ -29,13 +29,27 @@ namespace ShaoComputation
         {
             Stopwatch sw = new Stopwatch();
             sw.Start();
-            var fullUri = string.Format($"{Environment.CurrentDirectory}\\OD.xlsx");
+            var fullUri = string.Empty;
+            if (string.IsNullOrWhiteSpace(PathBox.Text))
+            {
+                fullUri = string.Format($"{Environment.CurrentDirectory}\\Data\\OD.xlsx");
+            }
+            else
+            {
+                fullUri = PathBox.Text;
+            }
+            messageBox.Text += string.Format($"开始计算，文件路径为{fullUri}\r\n");
             var result = ReadExcel.LuDuan(fullUri);
             result = result.OrderBy(l => l.No).ToList();
             var luduans = ReadExcel.LuduanAndPoint(result, fullUri);
+            messageBox.Text += string.Format($"导入路段完成，路段数{luduans.Count}\r\n");
             var nodes = ReadExcel.Nodes(fullUri);
+            messageBox.Text += string.Format($"导入节点完成，节点数{nodes.Count}\r\n");
             var ods = ReadExcel.OD(fullUri);
+            messageBox.Text += string.Format($"导入OD完成，OD对数{ods.Count}\r\n");
             ReadExcel.Varia(fullUri);
+            messageBox.Text += string.Format($"导入参数完成\t\n");
+            messageBox.Text += string.Format($"{nameof(Varias.LuJingCount)}:{Varias.LuJingCount}\r\n");
             foreach (var od in ods)
             {
                 od.LuJings = GenarateLuJing.GetAllPath(od, luduans, nodes);
@@ -61,7 +75,7 @@ namespace ShaoComputation
             var uri = string.Format($"{Environment.CurrentDirectory}");
             Iteration.Run(ods, luduans, nodes, uri);
             sw.Stop();
-            MessageBox.Show($"任务完成！耗时{sw.ElapsedMilliseconds / 1000}秒");
+            messageBox.Text += string.Format($"任务完成！耗时{sw.ElapsedMilliseconds / 1000}秒");
         }
 
         private void GA_Button_Click(object sender, EventArgs e)
@@ -180,6 +194,20 @@ namespace ShaoComputation
             workbook.Write(sw1);
             sw1.Close();
             #endregion
+        }
+
+        private void ChooseBtn_Click(object sender, EventArgs e)
+        {
+            //初始化一个OpenFileDialog类 
+            OpenFileDialog fileDialog = new OpenFileDialog();
+            fileDialog.InitialDirectory = $"{Application.StartupPath}\\Data";
+            //判断用户是否正确的选择了文件 
+            if (fileDialog.ShowDialog() == DialogResult.OK)
+            {
+                //获取用户选择文件的后缀名 
+                string fullUri = fileDialog.FileName;
+                PathBox.Text = fullUri;
+            }
         }
     }
 }
