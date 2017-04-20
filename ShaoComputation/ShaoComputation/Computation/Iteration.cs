@@ -84,6 +84,18 @@ namespace ShaoComputation.Computation
                         od.Q_rs_c = od.Q_rs - od.Q_rs_b;
                     }
                 }
+                foreach (var od in ods)
+                {
+                    foreach (var lujing in od.LuJings)
+                    {
+                        foreach (var luduan in lujing.LuDuans)
+                        {
+                            luduans.NumOf(luduan.No).LD_fac_fab();
+                            luduans.NumOf(luduan.No).LD_tac_tab();
+                        }
+                        //lujing.Fee(luduans);
+                    }
+                }
                 var v1 = new List<double>();
                 var v2 = new List<double>();
                 var v3 = new List<double>();
