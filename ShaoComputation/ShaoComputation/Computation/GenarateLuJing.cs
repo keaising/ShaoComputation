@@ -90,7 +90,14 @@ namespace ShaoComputation.Computation
             var carLujing = lujings.OrderBy(e => e.LuDuans.Sum(ld => ld.ltc)).Take(Varias.LuJingCount).ToList();
             var result = new List<LuJing>();
             result.AddRange(busLujing);
-            result.AddRange(carLujing);
+            foreach (var clj in carLujing)
+            {
+                //去重
+                if (!result.Any(lj => string.Join(",", lj.Nodes.Select(n => n.No)) == string.Join(",", clj.Nodes.Select(n => n.No))))
+                {
+                    result.Add(clj);
+                }
+            }
             #endregion
             return result;
         }
