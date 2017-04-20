@@ -115,10 +115,12 @@ namespace ShaoComputation.Helper
                             case 4:
                                 var value4 = xlRange.Cells[i, j].Value2.ToString();
                                 luduan.tc0 = Convert.ToDouble(value4);
+                                luduan.ltc = Convert.ToDouble(value4);
                                 break;
                             case 5:
                                 var value5 = xlRange.Cells[i, j].Value2.ToString();
                                 luduan.tb0 = Convert.ToDouble(value5);
+                                luduan.ltb = Convert.ToDouble(value5);
                                 break;
                             case 6:
                                 var value6 = xlRange.Cells[i, j].Value2.ToString();
@@ -271,6 +273,10 @@ namespace ShaoComputation.Helper
                         case 25:
                             var value25 = xlRange.Cells[2, j].Value2.ToString();
                             Varias.Tmax = Convert.ToInt32(value25);
+                            break;
+                        case 26:
+                            var value26 = xlRange.Cells[2, j].Value2.ToString();
+                            Varias.LuJingCount = Convert.ToInt32(value26);
                             break;
                         default:
                             break;

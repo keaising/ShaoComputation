@@ -1,4 +1,5 @@
-﻿using ShaoComputation.Helper;
+﻿using ShaoComputation.Const;
+using ShaoComputation.Helper;
 using ShaoComputation.Model;
 using System;
 using System.Collections.Generic;
@@ -83,7 +84,15 @@ namespace ShaoComputation.Computation
                 }
             }
             GetLuduansByNode(luDuans, lujings);
-            return lujings;
+            #region 筛选路阻函数最小的几条路径
+            luDuans.ChangeLtcLtb();
+            var busLujing = lujings.OrderBy(e => e.LuDuans.Sum(ld => ld.ltb)).Take(Varias.LuJingCount).ToList();
+            var carLujing = lujings.OrderBy(e => e.LuDuans.Sum(ld => ld.ltc)).Take(Varias.LuJingCount).ToList();
+            var result = new List<LuJing>();
+            result.AddRange(busLujing);
+            result.AddRange(carLujing);
+            #endregion
+            return result;
         }
 
         /// <summary>

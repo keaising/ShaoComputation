@@ -111,5 +111,9 @@ namespace ShaoComputation.Const
         /// 最大适应度
         /// </summary>
         public static double MaxResult { get; set; }
+        /// <summary>
+        /// OD中路阻最小的N条路径
+        /// </summary>
+        public static int LuJingCount { get; set; }
     }
 }

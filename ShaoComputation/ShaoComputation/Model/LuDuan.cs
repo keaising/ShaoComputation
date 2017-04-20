@@ -68,5 +68,13 @@ namespace ShaoComputation.Model
         /// 路段所在路径
         /// </summary>
         public List<LuJing> At { get; set; }
+        /// <summary>
+        /// 筛选路径所用的小汽车行驶时间
+        /// </summary>
+        public double ltc { get; set; }
+        /// <summary>
+        /// 筛选路径所用的公交车行驶时间
+        /// </summary>
+        public double ltb { get; set; }
     }
 }

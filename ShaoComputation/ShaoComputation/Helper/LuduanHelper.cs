@@ -1,4 +1,5 @@
-﻿using ShaoComputation.Model;
+﻿using ShaoComputation.Const;
+using ShaoComputation.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +29,39 @@ namespace ShaoComputation.Helper
                     start = start,
                     end = end
                 };
+            }
+        }
+
+        public static void ChangeLtcLtb(this List<LuDuan> luduans)
+        {
+            foreach (var l in luduans)
+            {
+                if (l.N == 0)
+                {
+                    l.ltc = Varias.MaxValue;
+                    l.ltb = Varias.MaxValue;
+                }
+                else
+                {
+                    if (l.Lambda == 0)
+                    {
+                        l.ltc = l.tc0;
+                        l.ltb = l.tb0;
+                    }
+                    else
+                    {
+                        if (l.N == l.Yita)
+                        {
+                            l.ltc = Varias.MaxValue;
+                            l.ltb = l.tb0;
+                        }
+                        else
+                        {
+                            l.ltc = l.tc0;
+                            l.ltb = l.tb0;
+                        }
+                    }
+                }
             }
         }
     }
