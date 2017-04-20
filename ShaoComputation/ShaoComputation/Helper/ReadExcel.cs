@@ -115,12 +115,12 @@ namespace ShaoComputation.Helper
                             case 4:
                                 var value4 = xlRange.Cells[i, j].Value2.ToString();
                                 luduan.tc0 = Convert.ToDouble(value4);
-                                luduan.ltc = Convert.ToDouble(value4);
+                                //luduan.ltc = Convert.ToDouble(value4);
                                 break;
                             case 5:
                                 var value5 = xlRange.Cells[i, j].Value2.ToString();
                                 luduan.tb0 = Convert.ToDouble(value5);
-                                luduan.ltb = Convert.ToDouble(value5);
+                                //luduan.ltb = Convert.ToDouble(value5);
                                 break;
                             case 6:
                                 var value6 = xlRange.Cells[i, j].Value2.ToString();
