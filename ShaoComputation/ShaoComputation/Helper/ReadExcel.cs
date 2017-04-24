@@ -354,7 +354,7 @@ namespace ShaoComputation.Helper
                 });
             }
 
-            for (int i = 2; i < rowCount + 1; i++)
+            for (int i = 2; i <= rowCount; i++)
             {
                 for (int j = 2; j <= colCount; j++)
                 {
