@@ -95,7 +95,7 @@ namespace ShaoComputation
             }
             var groups = new List<Group>();
             Varias.GroupNo = 0;
-            ReadExcel.Varia(fullUri);
+            ReadExcel.Excel2Json(fullUri);
             var nodesOrigin = ReadExcel.Nodes(fullUri);
             var odsOrigin = ReadExcel.OD(fullUri);
             var result = ReadExcel.LuDuan(fullUri);
@@ -185,12 +185,13 @@ namespace ShaoComputation
                 children = GeneticAlgorithm.CalculateFitness(children);
                 var minResult = children.Min(c => c.Result);
                 minResults.Add(minResult);
-                minFs.Add(children.FirstOrDefault(g => g.Result == minResult).Fs);
+                minFs.Add(CopyHelper.DeepClone(children.FirstOrDefault(g => g.Result == minResult).Fs));
                 results.Add(i, children.Select(c => c.Result).ToList());
                 sw2.Stop();
                 groups = children;
                 messageBox.Text += string.Format(($"第{i + 1}次迭代完成，耗时{sw2.ElapsedMilliseconds / 1000}秒\r\n"));
             }
+
             sw.Stop();
             messageBox.Text += string.Format(($"遗传算法完成，{Varias.T}次迭代共耗时{sw.ElapsedMilliseconds / 1000}秒"));
             #endregion
@@ -200,6 +201,7 @@ namespace ShaoComputation
             IRow row0 = sheet1.CreateRow(0);
             row0.CreateCell(0).SetCellValue("Result");
             row0.CreateCell(1).SetCellValue("Fs");
+            row0.CreateCell(1).SetCellValue(Varias.MaxResult);
             var rowCount = 0;
             foreach (var Fs in minFs)
             {
@@ -226,6 +228,21 @@ namespace ShaoComputation
                     row.CreateCell(i + 1).SetCellValue(list.Value[i]);
                 }
             }
+            ISheet sheet3 = workbook.CreateSheet("AllGroups");
+            IRow row3 = sheet3.CreateRow(0);
+            rowCount = 0;
+            foreach (var list in groups)
+            {
+                rowCount = rowCount + 1;
+                IRow row = sheet3.CreateRow(rowCount);
+                row.CreateCell(0).SetCellValue(string.Format($"{list.Fitness}"));
+                for (int i = 0; i < list.Fs.Count; i++)
+                {
+                    row.CreateCell(i + 1).SetCellValue(list.Fs[i]);
+                }
+            }
+
+
             var newFile = string.Format($"{uri}\\Data\\{DateTime.Now.Day}-{DateTime.Now.Hour}-{DateTime.Now.Minute}-{DateTime.Now.Second}-遗传算法结果.xlsx");
             FileStream sw1 = File.Create(newFile);
             workbook.Write(sw1);

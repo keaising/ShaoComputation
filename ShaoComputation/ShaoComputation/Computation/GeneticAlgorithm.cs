@@ -104,7 +104,10 @@ namespace ShaoComputation.Computation
                 var num = seed.Next(0, geneCount);
                 var groupNum = (int)Math.Round(num / (double)groups.First().Fs.Count);
                 var geneNum = num % groups.First().Fs.Count;
-                groups[groupNum].Fs[geneNum] = Randam.F;
+                //if (groups.Count > groupNum && groups[groupNum].Fs != null && groups[groupNum].Fs.Count > (geneNum))
+                //{
+                    groups[groupNum].Fs[geneNum] = Randam.F;
+                //}
             }
             return groups;
         }
@@ -126,6 +129,6 @@ namespace ShaoComputation.Computation
                 group.Fitness = Varias.MaxResult - group.Result;
             }
             return groups;
-        } 
+        }
     }
 }

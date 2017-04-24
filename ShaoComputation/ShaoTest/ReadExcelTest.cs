@@ -19,7 +19,7 @@ namespace ShaoTest
             var result = ReadExcel.OD(fullUri);
             result = result.OrderBy(od => od.Start).ThenBy(od => od.End).ToList();
 
-            Assert.AreEqual(16, result.Count);
+            Assert.IsTrue(result.Count > 0);
         }
 
         [TestMethod]
@@ -54,6 +54,15 @@ namespace ShaoTest
             result = result.OrderBy(od => od.No).ToList();
 
             Assert.AreEqual(50, result.Count);
+        }
+
+
+        [TestMethod]
+        public void Excel2JsonTest()
+        {
+            var fullUri = String.Format($"{Environment.CurrentDirectory}\\OD.xlsx");
+
+            ReadExcel.Excel2Json(fullUri);
         }
     }
 }
