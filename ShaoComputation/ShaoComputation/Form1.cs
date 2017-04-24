@@ -229,6 +229,7 @@ namespace ShaoComputation
             var newFile = string.Format($"{uri}\\Data\\{DateTime.Now.Day}-{DateTime.Now.Hour}-{DateTime.Now.Minute}-{DateTime.Now.Second}-遗传算法结果.xlsx");
             FileStream sw1 = File.Create(newFile);
             workbook.Write(sw1);
+            workbook.Close();
             sw1.Close();
             #endregion
         }
