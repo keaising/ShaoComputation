@@ -9,6 +9,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using Excel = Microsoft.Office.Interop.Excel;
 
 
@@ -380,6 +381,51 @@ namespace ShaoComputation.Helper
             Marshal.ReleaseComObject(xlApp);
             #endregion
             return nodes;
+        }
+
+        public static void Excel2Json(string fullUri)
+        {
+            var ODs = new List<OD>();
+            Excel.Application xlApp = new Excel.Application();
+            Excel.Workbook xlWorkbook = xlApp.Workbooks.Open(fullUri);
+            Excel._Worksheet xlWorksheet = xlWorkbook.Sheets[1];
+            Excel.Range xlRange = xlWorksheet.UsedRange;
+            int rowCount = xlRange.Rows.Count;
+            int colCount = xlRange.Columns.Count;
+            for (int i = 2; i <= rowCount; i++)
+            {
+                for (int j = 2; j <= colCount; j++)
+                {
+                    if (xlRange.Cells[i, j] != null && xlRange.Cells[i, j].Value2 != null)
+                    {
+                        var od = new OD()
+                        {
+                            Start = i - 1,
+                            End = j - 1
+                        };
+                        var value = xlRange.Cells[i, j].Value2.ToString();
+                        od.Q_rs = Convert.ToDouble(value);
+                        ODs.Add(od);
+                    }
+                }
+            }
+            var newfile = string.Format(Application.StartupPath + "\\Data\\OD.json");
+            using (StreamWriter file = new StreamWriter(newfile, false))
+            {
+                ODs = ODs.OrderBy(c => c.No).ToList();
+                var json = JsonConvert.SerializeObject(ODs);
+                file.WriteLine(json);
+            }
+            #region release
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            Marshal.ReleaseComObject(xlRange);
+            Marshal.ReleaseComObject(xlWorksheet);
+            xlWorkbook.Close();
+            Marshal.ReleaseComObject(xlWorkbook);
+            xlApp.Quit();
+            Marshal.ReleaseComObject(xlApp);
+            #endregion
         }
     }
 }
