@@ -129,5 +129,26 @@ namespace ShaoTest
             }
             #endregion
         }
+
+        [TestMethod]
+        public void Varation()
+        {
+            var geneCount = 100;
+            var motherList = new List<List<int>>();
+            for (int j = 0; j < 10; j++)
+            {
+                motherList.Add(Enumerable.Range(1, 10).ToList());
+            }
+            for (int m = 0; m < 10; m++)
+            {
+                var seed = new Random();
+                var num = seed.Next(0, geneCount);
+                var groupNum = (int)Math.Round(num / (double)10);
+                var geneNum = num % 10;
+                motherList[groupNum][geneNum] = Randam.F;
+            }
+
+            int i = 0;
+        }
     }
 }

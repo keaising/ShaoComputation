@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -230,6 +231,14 @@ namespace ShaoComputation.Computation
                 var newFile = string.Format($"{uri}\\Data\\{DateTime.Now.Day}-{DateTime.Now.Hour}-{DateTime.Now.Minute}-{DateTime.Now.Second}-计算结果.xlsx");
                 FileStream sw = File.Create(newFile);
                 workbook.Write(sw);
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+                Marshal.ReleaseComObject(sheet1);
+                Marshal.ReleaseComObject(sheet2);
+                Marshal.ReleaseComObject(sheet3);
+                Marshal.ReleaseComObject(sheet4);
+                workbook.Close();
+                Marshal.ReleaseComObject(workbook);
                 sw.Close();
                 #endregion
                 #region 导出所有数据到Json

@@ -100,6 +100,7 @@
     <Compile Include="Helper\ReadExcel.cs" />
     <Compile Include="Model\Group.cs" />
     <Compile Include="Model\LuDuan.cs" />
+    <Compile Include="Model\LuduanLite.cs" />
     <Compile Include="Model\LuJing.cs" />
     <Compile Include="Model\Node.cs" />
     <Compile Include="Model\OD.cs" />

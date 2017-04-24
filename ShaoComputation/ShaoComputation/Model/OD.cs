@@ -22,7 +22,14 @@ namespace ShaoComputation.Model
         {
             get
             {
-                return LuJings.Min(l => l.ec);
+                if (LuJings != null)
+                {
+                    return LuJings.Min(l => l.ec);
+                }
+                else
+                {
+                    return 0;
+                }
             }
         }
         /// <summary>
@@ -32,7 +39,14 @@ namespace ShaoComputation.Model
         {
             get
             {
-                return LuJings.Min(l => l.eb);
+                if (LuJings != null)
+                {
+                    return LuJings.Min(l => l.eb);
+                }
+                else
+                {
+                    return 0;
+                }
             }
         }
         public List<LuJing> LuJings { get; set; }
