@@ -233,12 +233,12 @@ namespace ShaoComputation.Computation
                 workbook.Write(sw);
                 GC.Collect();
                 GC.WaitForPendingFinalizers();
-                Marshal.ReleaseComObject(sheet1);
-                Marshal.ReleaseComObject(sheet2);
-                Marshal.ReleaseComObject(sheet3);
-                Marshal.ReleaseComObject(sheet4);
+                //Marshal.ReleaseComObject(sheet1);
+                //Marshal.ReleaseComObject(sheet2);
+                //Marshal.ReleaseComObject(sheet3);
+                //Marshal.ReleaseComObject(sheet4);
                 workbook.Close();
-                Marshal.ReleaseComObject(workbook);
+                //Marshal.ReleaseComObject(workbook);
                 sw.Close();
                 #endregion
                 #region 导出所有数据到Json
