@@ -113,6 +113,10 @@ namespace ShaoComputation.Computation
                 //todo: 待议
                 var final = v1.Sum() / v2.Sum() + v3.Sum() / v4.Sum() + Math.Sqrt(v5.Sum(v => Math.Pow(v, 2))) / ods.Sum(od => od.Q_rs);
                 finals.Add(final);
+                if (final < Varias.Epsilon)
+                {
+                    break;
+                }
             }
             if (Varias.IsGA)
             {

@@ -115,5 +115,6 @@ namespace ShaoComputation.Const
         /// OD中路阻最小的N条路径
         /// </summary>
         public static int LuJingCount { get; set; }
+        public static double Epsilon { get; set; }    
     }
 }
