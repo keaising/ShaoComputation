@@ -57,7 +57,7 @@ namespace ShaoComputation.Computation
         {
             ld.Fac = ld.At.Sum(l => l.Fpc);
             ld.Fab = ld.At.Sum(l => l.Fpb);
-            ld.Xab = ld.F;
+            ld.Xab = ld.Fab / Varias.Bb;
             ld.Xac = ld.Fac / Varias.Bc;
         }
     }
